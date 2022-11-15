@@ -1,18 +1,33 @@
 
 import SwiftUI
 import CropViewController
+import PhotosUI
 
 struct EditPhotoView: View {
+    // Placeholder image
     @State var image1: UIImage? = UIImage(named: "image1")!
     
-    @State private var showImageCropper = false
+    // PhotoPicker vars
+    @State private var selectedItem: PhotosPickerItem? = nil
+    @State private var selectedImageData: Data? = nil
     
+    // CropImage vars
+    @State private var showImageCropper = false
     @State private var tempInputImage: UIImage?
 
+    // func to crop the img
       func imageCropped(image: UIImage){
         self.tempInputImage = nil
           self.image1 = image
       }
+    
+    // func to update the image based on the one picked in the gallery
+    func updateImg(){
+        if let selectedImageData,
+           let uiImage = UIImage(data: selectedImageData) {
+            image1 = uiImage
+        }
+    }
     
     var body: some View {
         NavigationView {
@@ -80,12 +95,31 @@ struct EditPhotoView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Image(systemName: "house")
+                    PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
+                        Image(systemName: "photo")
+                    }
+                    .onChange(of: selectedItem) { newItem in
+                        Task {
+                           
+                            if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                selectedImageData = data
+                            }
+                            
+                            updateImg()
+                        }
+                    }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Text("Save")
-                        .foregroundColor(.blue)
+                    Button { // Save the image in the gallery
+                        UIImageWriteToSavedPhotosAlbum(image1!, nil, nil, nil)
+                    } label: {
+                        Text("Save")
+                            .foregroundColor(.blue)
+                    }
+
                 }
+                
+                
             }
         }
         
