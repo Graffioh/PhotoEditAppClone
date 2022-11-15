@@ -14,6 +14,7 @@
 		064F5BC02923D24800C9932F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 064F5BBF2923D24800C9932F /* Preview Assets.xcassets */; };
 		06743C7C2923EC67000C06D1 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 06743C7B2923EC67000C06D1 /* CropViewController */; };
 		06743C7E2923EC67000C06D1 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 06743C7D2923EC67000C06D1 /* TOCropViewController */; };
+		067592A42924244900AAFBFE /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067592A32924244900AAFBFE /* ImageSaver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		064F5BBA2923D24800C9932F /* EditPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoView.swift; sourceTree = "<group>"; };
 		064F5BBC2923D24800C9932F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		064F5BBF2923D24800C9932F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		067592A32924244900AAFBFE /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +88,7 @@
 		06743C782923D367000C06D1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				06103DED2923F132001CBE9B /* ImageCropper.swift */,
+				067592A52924270100AAFBFE /* Utils */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -96,6 +98,15 @@
 			children = (
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		067592A52924270100AAFBFE /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				06103DED2923F132001CBE9B /* ImageCropper.swift */,
+				067592A32924244900AAFBFE /* ImageSaver.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,6 +189,7 @@
 				064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */,
 				064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */,
 				06103DEE2923F132001CBE9B /* ImageCropper.swift in Sources */,
+				067592A42924244900AAFBFE /* ImageSaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

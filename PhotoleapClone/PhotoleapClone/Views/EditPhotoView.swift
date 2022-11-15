@@ -65,6 +65,9 @@ struct EditPhotoView: View {
                             .padding(8)
                             .font(.system(size:26))
                     }
+                    .fullScreenCover(isPresented: $showImageCropper) {
+                        ImageCropper(image: self.$image1, visible: self.$showImageCropper,done: self.imageCropped).zIndex(10)
+                    }
                     
                     Image(systemName: "slider.horizontal.3")
                         .padding(8)
@@ -111,7 +114,12 @@ struct EditPhotoView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button { // Save the image in the gallery
-                        UIImageWriteToSavedPhotosAlbum(image1!, nil, nil, nil)
+//                        UIImageWriteToSavedPhotosAlbum(image1!, nil, nil, nil)
+                        
+                        let imageSaver = ImageSaver()
+                        
+                        imageSaver.writeToPhotoAlbum(image: image1!)
+                        
                     } label: {
                         Text("Save")
                             .foregroundColor(.blue)
@@ -124,9 +132,9 @@ struct EditPhotoView: View {
         }
         
         // Crop tool logic
-        if showImageCropper {
-            ImageCropper(image: self.$image1, visible: self.$showImageCropper,done: self.imageCropped).zIndex(10)
-        }
+//        if showImageCropper {
+//            ImageCropper(image: self.$image1, visible: self.$showImageCropper,done: self.imageCropped).zIndex(10)
+//        }
     }
 }
 
