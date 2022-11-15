@@ -11,7 +11,8 @@ import SwiftUI
 struct PhotoleapCloneApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            EditPhotoView()
+                .preferredColorScheme(.dark)
         }
     }
 }

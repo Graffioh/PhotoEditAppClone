@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */; };
-		064F5BBB2923D24800C9932F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5BBA2923D24800C9932F /* ContentView.swift */; };
+		064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5BBA2923D24800C9932F /* EditPhotoView.swift */; };
 		064F5BBD2923D24800C9932F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 064F5BBC2923D24800C9932F /* Assets.xcassets */; };
 		064F5BC02923D24800C9932F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 064F5BBF2923D24800C9932F /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		064F5BB52923D24700C9932F /* PhotoleapClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoleapClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoleapCloneApp.swift; sourceTree = "<group>"; };
-		064F5BBA2923D24800C9932F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		064F5BBA2923D24800C9932F /* EditPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoView.swift; sourceTree = "<group>"; };
 		064F5BBC2923D24800C9932F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		064F5BBF2923D24800C9932F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +52,9 @@
 			isa = PBXGroup;
 			children = (
 				064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */,
-				064F5BBA2923D24800C9932F /* ContentView.swift */,
+				06743C792923D36C000C06D1 /* ViewModels */,
+				06743C782923D367000C06D1 /* Models */,
+				06743C772923D363000C06D1 /* Views */,
 				064F5BBC2923D24800C9932F /* Assets.xcassets */,
 				064F5BBE2923D24800C9932F /* Preview Content */,
 			);
@@ -65,6 +67,28 @@
 				064F5BBF2923D24800C9932F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		06743C772923D363000C06D1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				064F5BBA2923D24800C9932F /* EditPhotoView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		06743C782923D367000C06D1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		06743C792923D36C000C06D1 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +161,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				064F5BBB2923D24800C9932F /* ContentView.swift in Sources */,
+				064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */,
 				064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
