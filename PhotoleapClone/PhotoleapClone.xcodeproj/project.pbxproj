@@ -7,13 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06103DEE2923F132001CBE9B /* ImageCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06103DED2923F132001CBE9B /* ImageCropper.swift */; };
 		064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */; };
 		064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5BBA2923D24800C9932F /* EditPhotoView.swift */; };
 		064F5BBD2923D24800C9932F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 064F5BBC2923D24800C9932F /* Assets.xcassets */; };
 		064F5BC02923D24800C9932F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 064F5BBF2923D24800C9932F /* Preview Assets.xcassets */; };
+		06743C7C2923EC67000C06D1 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 06743C7B2923EC67000C06D1 /* CropViewController */; };
+		06743C7E2923EC67000C06D1 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 06743C7D2923EC67000C06D1 /* TOCropViewController */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		06103DED2923F132001CBE9B /* ImageCropper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropper.swift; sourceTree = "<group>"; };
 		064F5BB52923D24700C9932F /* PhotoleapClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoleapClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoleapCloneApp.swift; sourceTree = "<group>"; };
 		064F5BBA2923D24800C9932F /* EditPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPhotoView.swift; sourceTree = "<group>"; };
@@ -26,6 +30,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06743C7E2923EC67000C06D1 /* TOCropViewController in Frameworks */,
+				06743C7C2923EC67000C06D1 /* CropViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +86,7 @@
 		06743C782923D367000C06D1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				06103DED2923F132001CBE9B /* ImageCropper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -107,6 +114,10 @@
 			dependencies = (
 			);
 			name = PhotoleapClone;
+			packageProductDependencies = (
+				06743C7B2923EC67000C06D1 /* CropViewController */,
+				06743C7D2923EC67000C06D1 /* TOCropViewController */,
+			);
 			productName = PhotoleapClone;
 			productReference = 064F5BB52923D24700C9932F /* PhotoleapClone.app */;
 			productType = "com.apple.product-type.application";
@@ -135,6 +146,9 @@
 				Base,
 			);
 			mainGroup = 064F5BAC2923D24700C9932F;
+			packageReferences = (
+				06743C7A2923EC67000C06D1 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
+			);
 			productRefGroup = 064F5BB62923D24700C9932F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -163,6 +177,7 @@
 			files = (
 				064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */,
 				064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */,
+				06103DEE2923F132001CBE9B /* ImageCropper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +378,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		06743C7A2923EC67000C06D1 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		06743C7B2923EC67000C06D1 /* CropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 06743C7A2923EC67000C06D1 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = CropViewController;
+		};
+		06743C7D2923EC67000C06D1 /* TOCropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 06743C7A2923EC67000C06D1 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = TOCropViewController;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 064F5BAD2923D24700C9932F /* Project object */;
 }

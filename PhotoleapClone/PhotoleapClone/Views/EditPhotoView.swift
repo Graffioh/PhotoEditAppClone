@@ -1,15 +1,26 @@
 
 import SwiftUI
+import CropViewController
 
 struct EditPhotoView: View {
+    @State var image1: UIImage? = UIImage(named: "image1")!
+    
+    @State private var showImageCropper = false
+    
+    @State private var tempInputImage: UIImage?
+
+      func imageCropped(image: UIImage){
+        self.tempInputImage = nil
+          self.image1 = image
+      }
+    
     var body: some View {
         NavigationView {
             VStack{
                 
                 Spacer()
                 
-                
-                Image("image1")
+                Image(uiImage: image1!)
                     .resizable()
                     .scaledToFit()
                     .padding()
@@ -32,9 +43,13 @@ struct EditPhotoView: View {
                 .padding(.leading)
                 
                 HStack{
-                    Image(systemName: "crop")
-                        .padding(8)
-                        .font(.system(size:26))
+                    Button {
+                        self.showImageCropper.toggle()
+                    } label: {
+                        Image(systemName: "crop")
+                            .padding(8)
+                            .font(.system(size:26))
+                    }
                     
                     Image(systemName: "slider.horizontal.3")
                         .padding(8)
@@ -72,6 +87,11 @@ struct EditPhotoView: View {
                         .foregroundColor(.blue)
                 }
             }
+        }
+        
+        // Crop tool logic
+        if showImageCropper {
+            ImageCropper(image: self.$image1, visible: self.$showImageCropper,done: self.imageCropped).zIndex(10)
         }
     }
 }
