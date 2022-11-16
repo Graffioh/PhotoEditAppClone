@@ -4,7 +4,6 @@ import SwiftUI
 
 class ImageModel: ObservableObject{
     @Published var blurIntensity: CGFloat
-    @Published var hueAdjust: Double
     @Published var contrastAdjust: Double
     @Published var opacityAdjust: Double
     @Published var brightnessAdjust: Double
@@ -13,9 +12,8 @@ class ImageModel: ObservableObject{
     @Published var showEnhancer: Bool
     @Published var imageUI: UIImage?
     
-    init(blurIntensity: CGFloat, hueAdjust: Double, contrastAdjust: Double, opacityAdjust: Double, brightnessAdjust: Double, saturationAdjust: Double, showCropper: Bool, showEnhancer: Bool, imageUI: UIImage) {
+    init(blurIntensity: CGFloat, contrastAdjust: Double, opacityAdjust: Double, brightnessAdjust: Double, saturationAdjust: Double, showCropper: Bool, showEnhancer: Bool, imageUI: UIImage) {
         self.blurIntensity = blurIntensity
-        self.hueAdjust = hueAdjust
         self.contrastAdjust = contrastAdjust
         self.opacityAdjust = opacityAdjust
         self.brightnessAdjust = brightnessAdjust

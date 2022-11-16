@@ -38,7 +38,6 @@ struct ImageEnhancerView: View {
                         .scaledToFit()
                         .padding()
                         .opacity(imageEnt.opacityAdjust)
-                        .hueRotation(Angle(degrees:imageEnt.hueAdjust))
                         .brightness(imageEnt.brightnessAdjust)
                         .contrast(imageEnt.contrastAdjust)
                         .saturation(imageEnt.saturationAdjust)
@@ -75,19 +74,13 @@ struct ImageEnhancerView: View {
                     }.padding(.horizontal, 30)
                     
                     HStack(spacing: 20){
-                        Text("Hue rotation")
-                            .foregroundColor(Color(.systemBlue))
-                        
-                        Slider(value: $imageEnt.hueAdjust, in: 0...90)
-                    }.padding(.horizontal, 30)
-                    
-                    HStack(spacing: 20){
                         Text("Opacity")
                             .foregroundColor(Color(.systemBlue))
                         
                         Slider(value: $imageEnt.opacityAdjust, in: 0...1)
                     }.padding(.horizontal, 30)
                 }
+                .padding(.bottom,30)
 //                .toolbar {
 //                    ToolbarItem(placement: .navigationBarLeading) {
 //                        Button {

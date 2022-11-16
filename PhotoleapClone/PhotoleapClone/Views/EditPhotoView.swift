@@ -16,7 +16,7 @@ struct EditPhotoView: View {
     @State private var tempInputImage: UIImage?
     
     @State private var showImageEnhancer = false
-    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, hueAdjust: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, imageUI: UIImage(named: "image1")!)
+    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, imageUI: UIImage(named: "image1")!)
 
     // func to crop the img
       func imageCropped(image: UIImage){
@@ -49,7 +49,6 @@ struct EditPhotoView: View {
                         .scaledToFit()
                         .padding()
                         .opacity(imageEnt.opacityAdjust)
-                        .hueRotation(Angle(degrees:imageEnt.hueAdjust))
                         .brightness(imageEnt.brightnessAdjust)
                         .contrast(imageEnt.contrastAdjust)
                         .saturation(imageEnt.saturationAdjust)
@@ -74,6 +73,7 @@ struct EditPhotoView: View {
 //                    .padding(.leading)
                     
                     HStack{
+                        // Image cropper tool
                         Button {
                             imageEnt.showCropper.toggle()
                         } label: {
@@ -85,6 +85,7 @@ struct EditPhotoView: View {
                             ImageCropper(image: $imageEnt.imageUI, visible: $imageEnt.showCropper,done: self.imageCropped).zIndex(10)
                         }
                         
+                        // Image enhancer tool
                         Button {
                             imageEnt.showEnhancer.toggle()
                         } label: {
