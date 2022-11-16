@@ -25,6 +25,7 @@
 		064F5BBC2923D24800C9932F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		064F5BBF2923D24800C9932F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		067592A32924244900AAFBFE /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
+		067592A62924D07F00AAFBFE /* TOCropViewController */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TOCropViewController; path = ../../../../Desktop/TOCropViewController; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +44,7 @@
 		064F5BAC2923D24700C9932F = {
 			isa = PBXGroup;
 			children = (
+				067592A62924D07F00AAFBFE /* TOCropViewController */,
 				064F5BB72923D24700C9932F /* PhotoleapClone */,
 				064F5BB62923D24700C9932F /* Products */,
 			);

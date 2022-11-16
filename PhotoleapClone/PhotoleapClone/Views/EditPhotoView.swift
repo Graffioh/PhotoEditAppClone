@@ -30,110 +30,134 @@ struct EditPhotoView: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack{
-                
-                Spacer()
-                
-                Image(uiImage: image1!)
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
-                
-                Spacer()
-                
-                HStack{
-                    Image(systemName: "arrow.turn.up.left")
-                        .padding(.bottom, 30)
-                        .font(.system(size:26))
-                    
-                    Image(systemName: "arrow.turn.up.right")
-                        .padding(.bottom, 30)
-                        .font(.system(size:26))
-                        .padding(.leading,20)
+        
+            
+            NavigationView {
+//                ZStack {
+//                    Color(.)
+//                        .edgesIgnoringSafeArea(.all)
+                VStack{
                     
                     Spacer()
                     
-                }
-                .padding(.leading)
-                
-                HStack{
-                    Button {
-                        self.showImageCropper.toggle()
-                    } label: {
-                        Image(systemName: "crop")
+                    Image(uiImage: image1!)
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                    
+                    Spacer()
+                    
+//                    HStack{
+//                        Image(systemName: "arrow.turn.up.left")
+//                            .padding(.bottom, 30)
+//                            .font(.system(size:26))
+//
+//                        Image(systemName: "arrow.turn.up.right")
+//                            .padding(.bottom, 30)
+//                            .font(.system(size:26))
+//                            .padding(.leading,20)
+//
+//                        Spacer()
+//
+//                    }
+//                    .padding(.leading)
+                    
+                    HStack{
+                        Button {
+                            self.showImageCropper.toggle()
+                        } label: {
+                            Image(systemName: "crop")
+                                .padding(8)
+                                .font(.system(size:26))
+                        }
+                        .fullScreenCover(isPresented: $showImageCropper) {
+                            ImageCropper(image: self.$image1, visible: self.$showImageCropper,done: self.imageCropped).zIndex(10)
+                        }
+                        
+                        Image(systemName: "slider.horizontal.3")
+                            .padding(8)
+                            .font(.system(size:26))
+                        
+                        Image(systemName: "eraser.line.dashed")
+                            .padding(8)
+                            .font(.system(size:26))
+                        
+                        Image(systemName: "paintbrush.pointed")
+                            .padding(8)
+                            .font(.system(size:26))
+                        
+                        Image(systemName: "wand.and.stars")
+                            .padding(8)
+                            .font(.system(size:26))
+                        
+                        Image(systemName: "skew")
+                            .padding(8)
+                            .font(.system(size:26))
+                        
+                        Image(systemName: "character")
                             .padding(8)
                             .font(.system(size:26))
                     }
-                    .fullScreenCover(isPresented: $showImageCropper) {
-                        ImageCropper(image: self.$image1, visible: self.$showImageCropper,done: self.imageCropped).zIndex(10)
-                    }
-                    
-                    Image(systemName: "slider.horizontal.3")
-                        .padding(8)
-                        .font(.system(size:26))
-                    
-                    Image(systemName: "eraser.line.dashed")
-                        .padding(8)
-                        .font(.system(size:26))
-                    
-                    Image(systemName: "paintbrush.pointed")
-                        .padding(8)
-                        .font(.system(size:26))
-                    
-                    Image(systemName: "wand.and.stars")
-                        .padding(8)
-                        .font(.system(size:26))
-                    
-                    Image(systemName: "skew")
-                        .padding(8)
-                        .font(.system(size:26))
-                    
-                    Image(systemName: "character")
-                        .padding(8)
-                        .font(.system(size:26))
                 }
-            }
-            .navigationTitle("Photoleap")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
-                        Image(systemName: "photo")
-                    }
-                    .onChange(of: selectedItem) { newItem in
-                        Task {
-                           
-                            if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                selectedImageData = data
+                .navigationTitle("Photoleap")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
+                            Image(systemName: "photo")
+                        }
+                        .onChange(of: selectedItem) { newItem in
+                            Task {
+                                
+                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                    selectedImageData = data
+                                }
+                                
+                                updateImg()
                             }
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button { // Save the image in the gallery
+                            //                        UIImageWriteToSavedPhotosAlbum(image1!, nil, nil, nil)
                             
-                            updateImg()
+                            let imageSaver = ImageSaver()
+                            
+                            imageSaver.writeToPhotoAlbum(image: image1!)
+                            
+                        } label: {
+                            Text("Save")
+                                .foregroundColor(.yellow)
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button { } label: {
+                        Image(systemName: "arrow.turn.up.left")
+                            .offset(y:11)
+                            .padding(.bottom, 30)
+                            .font(.system(size:20))
+                            .foregroundColor(.white)
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button { } label: {
+                        Image(systemName: "arrow.turn.up.right")
+                            .offset(y:11)
+                            .padding(.bottom, 30)
+                            .font(.system(size:20))
+                            .foregroundColor(.white)
                         }
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button { // Save the image in the gallery
-//                        UIImageWriteToSavedPhotosAlbum(image1!, nil, nil, nil)
-                        
-                        let imageSaver = ImageSaver()
-                        
-                        imageSaver.writeToPhotoAlbum(image: image1!)
-                        
-                    } label: {
-                        Text("Save")
-                            .foregroundColor(.blue)
-                    }
-
-                }
-                
-                
             }
-        }
-        
-        // Crop tool logic
-//        if showImageCropper {
-//            ImageCropper(image: self.$image1, visible: self.$showImageCropper,done: self.imageCropped).zIndex(10)
+            
+            // Crop tool logic (split-screen)
+            //        if showImageCropper {
+            //            ImageCropper(image: self.$image1, visible: self.$showImageCropper,done: self.imageCropped).zIndex(10)
+            //        }
 //        }
     }
 }
