@@ -15,6 +15,8 @@
 		06743C7C2923EC67000C06D1 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 06743C7B2923EC67000C06D1 /* CropViewController */; };
 		06743C7E2923EC67000C06D1 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 06743C7D2923EC67000C06D1 /* TOCropViewController */; };
 		067592A42924244900AAFBFE /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067592A32924244900AAFBFE /* ImageSaver.swift */; };
+		067592A82924E02700AAFBFE /* ImageEnhancerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067592A72924E02700AAFBFE /* ImageEnhancerView.swift */; };
+		067592AA2924E4AA00AAFBFE /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067592A92924E4AA00AAFBFE /* ImageModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		064F5BBF2923D24800C9932F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		067592A32924244900AAFBFE /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 		067592A62924D07F00AAFBFE /* TOCropViewController */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TOCropViewController; path = ../../../../Desktop/TOCropViewController; sourceTree = "<group>"; };
+		067592A72924E02700AAFBFE /* ImageEnhancerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEnhancerView.swift; sourceTree = "<group>"; };
+		067592A92924E4AA00AAFBFE /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				064F5BBA2923D24800C9932F /* EditPhotoView.swift */,
+				067592A72924E02700AAFBFE /* ImageEnhancerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -91,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				067592A52924270100AAFBFE /* Utils */,
+				067592A92924E4AA00AAFBFE /* ImageModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -189,9 +195,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */,
+				067592AA2924E4AA00AAFBFE /* ImageModel.swift in Sources */,
 				064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */,
 				06103DEE2923F132001CBE9B /* ImageCropper.swift in Sources */,
 				067592A42924244900AAFBFE /* ImageSaver.swift in Sources */,
+				067592A82924E02700AAFBFE /* ImageEnhancerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

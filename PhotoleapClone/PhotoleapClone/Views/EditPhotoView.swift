@@ -5,32 +5,36 @@ import PhotosUI
 
 struct EditPhotoView: View {
     // Placeholder image
-    @State var image1: UIImage? = UIImage(named: "image1")!
+    //@State var image1: UIImage? = UIImage(named: "image1")!
     
     // PhotoPicker vars
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
     
     // CropImage vars
-    @State private var showImageCropper = false
+    //@State private var showImageCropper = false
     @State private var tempInputImage: UIImage?
+    
+    @State private var showImageEnhancer = false
+    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, hueAdjust: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, imageUI: UIImage(named: "image1")!)
 
     // func to crop the img
       func imageCropped(image: UIImage){
         self.tempInputImage = nil
-          self.image1 = image
+          //self.image1 = image
+          imageEnt.imageUI = image
       }
     
     // func to update the image based on the one picked in the gallery
     func updateImg(){
         if let selectedImageData,
            let uiImage = UIImage(data: selectedImageData) {
-            image1 = uiImage
+            //image1 = uiImage
+            imageEnt.imageUI = uiImage
         }
     }
     
     var body: some View {
-        
             
             NavigationView {
 //                ZStack {
@@ -40,10 +44,17 @@ struct EditPhotoView: View {
                     
                     Spacer()
                     
-                    Image(uiImage: image1!)
+                    Image(uiImage: imageEnt.imageUI!)
                         .resizable()
                         .scaledToFit()
                         .padding()
+                        .opacity(imageEnt.opacityAdjust)
+                        .hueRotation(Angle(degrees:imageEnt.hueAdjust))
+                        .brightness(imageEnt.brightnessAdjust)
+                        .contrast(imageEnt.contrastAdjust)
+                        .saturation(imageEnt.saturationAdjust)
+                        .blur(radius: imageEnt.blurIntensity)
+                        
                     
                     Spacer()
                     
@@ -64,19 +75,26 @@ struct EditPhotoView: View {
                     
                     HStack{
                         Button {
-                            self.showImageCropper.toggle()
+                            imageEnt.showCropper.toggle()
                         } label: {
                             Image(systemName: "crop")
                                 .padding(8)
                                 .font(.system(size:26))
                         }
-                        .fullScreenCover(isPresented: $showImageCropper) {
-                            ImageCropper(image: self.$image1, visible: self.$showImageCropper,done: self.imageCropped).zIndex(10)
+                        .fullScreenCover(isPresented: $imageEnt.showCropper) {
+                            ImageCropper(image: $imageEnt.imageUI, visible: $imageEnt.showCropper,done: self.imageCropped).zIndex(10)
                         }
                         
-                        Image(systemName: "slider.horizontal.3")
-                            .padding(8)
-                            .font(.system(size:26))
+                        Button {
+                            imageEnt.showEnhancer.toggle()
+                        } label: {
+                            Image(systemName: "slider.horizontal.3")
+                                .padding(8)
+                                .font(.system(size:26))
+                        }
+                        .fullScreenCover(isPresented: $imageEnt.showEnhancer) {
+                            ImageEnhancerView(imageEnt: imageEnt)
+                        }
                         
                         Image(systemName: "eraser.line.dashed")
                             .padding(8)
@@ -99,7 +117,7 @@ struct EditPhotoView: View {
                             .font(.system(size:26))
                     }
                 }
-                .navigationTitle("Photoleap")
+                .navigationTitle("PhotoEditClone")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -124,7 +142,7 @@ struct EditPhotoView: View {
                             
                             let imageSaver = ImageSaver()
                             
-                            imageSaver.writeToPhotoAlbum(image: image1!)
+                            imageSaver.writeToPhotoAlbum(image: imageEnt.imageUI!)
                             
                         } label: {
                             Text("Save")
@@ -135,8 +153,6 @@ struct EditPhotoView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button { } label: {
                         Image(systemName: "arrow.turn.up.left")
-                            .offset(y:11)
-                            .padding(.bottom, 30)
                             .font(.system(size:20))
                             .foregroundColor(.white)
                         }
@@ -145,8 +161,6 @@ struct EditPhotoView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button { } label: {
                         Image(systemName: "arrow.turn.up.right")
-                            .offset(y:11)
-                            .padding(.bottom, 30)
                             .font(.system(size:20))
                             .foregroundColor(.white)
                         }
