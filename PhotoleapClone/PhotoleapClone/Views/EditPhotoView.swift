@@ -44,16 +44,17 @@ struct EditPhotoView: View {
                     
                     Spacer()
                     
-                    Image(uiImage: imageEnt.imageUI!)
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
-                        .opacity(imageEnt.opacityAdjust)
-                        .brightness(imageEnt.brightnessAdjust)
-                        .contrast(imageEnt.contrastAdjust)
-                        .saturation(imageEnt.saturationAdjust)
-                        .blur(radius: imageEnt.blurIntensity)
-                        
+                    if let image = imageEnt.imageUI {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .padding()
+                            .opacity(imageEnt.opacityAdjust)
+                            .brightness(imageEnt.brightnessAdjust)
+                            .contrast(imageEnt.contrastAdjust)
+                            .saturation(imageEnt.saturationAdjust)
+                            .blur(radius: imageEnt.blurIntensity)
+                    }
                     
                     Spacer()
                     
@@ -82,7 +83,8 @@ struct EditPhotoView: View {
                                 .font(.system(size:26))
                         }
                         .fullScreenCover(isPresented: $imageEnt.showCropper) {
-                            ImageCropper(image: $imageEnt.imageUI, visible: $imageEnt.showCropper,done: self.imageCropped).zIndex(10)
+                            //ImageCropper(image: $imageEnt.imageUI, visible: $imageEnt.showCropper,done: self.imageCropped).zIndex(10)
+                                ImageCropperView(imageEnt: imageEnt)
                         }
                         
                         // Image enhancer tool
