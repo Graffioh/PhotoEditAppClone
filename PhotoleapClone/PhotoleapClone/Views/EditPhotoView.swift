@@ -16,7 +16,7 @@ struct EditPhotoView: View {
     @State private var tempInputImage: UIImage?
     
     @State private var showImageEnhancer = false
-    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, imageUI: UIImage(named: "image1")!)
+    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, imageUI: UIImage(named: "image2")!)
 
     // func to crop the img
       func imageCropped(image: UIImage){

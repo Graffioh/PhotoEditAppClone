@@ -19,7 +19,7 @@ struct ImageCropperView: View {
     
     @State var centerRecLocation: CGPoint = CGPoint(x: 210, y: 420)
     
-    let recSize: CGSize = CGSize(width: 120, height: 60)
+    let recSize: CGSize = CGSize(width: 20, height: 60)
     
     func cropImage(_ inputImage: UIImage, toRect cropRect: CGRect, viewWidth: CGFloat, viewHeight: CGFloat) -> UIImage?
     {
@@ -92,13 +92,19 @@ struct ImageCropperView: View {
         }
         
         // Top Left
-        if recPos.y - (recSize.height / 2) < yTopBoundary &&  recPos.x - (recSize.width / 2) < xLeftBoundary{
+        if recPos.y - (recSize.height / 2) < yTopBoundary &&  recPos.x - (recSize.width / 2) < xLeftBoundary && imageSize.width == screenSize.width{
             return CGPoint(x:(imageSize.width / 2 + (recSize.width / 2)) - imageCenterX + 16, y: imageCenterY - ((imageSize.height - 30) / 2) + (recSize.height / 2))
+        }
+        else if recPos.y - (recSize.height / 2) < yTopBoundary &&  recPos.x - (recSize.width / 2) < xLeftBoundary{
+            return CGPoint(x:(imageCenterX - imageSize.width / 2 + 16) + recSize.width / 2, y: imageCenterY - ((imageSize.height - 30) / 2) + (recSize.height / 2))
         }
         
         // Bot Left
-        if recPos.y + (recSize.height / 2) > yBotBoundary &&  recPos.x - (recSize.width / 2) < xLeftBoundary{
+        if recPos.y + (recSize.height / 2) > yBotBoundary &&  recPos.x - (recSize.width / 2) < xLeftBoundary && imageSize.width == screenSize.width{
             return CGPoint(x:imageSize.width / 2 + (recSize.width / 2) - imageCenterX + 16, y: imageCenterY + ((imageSize.height - 30) / 2) - (recSize.height / 2))
+        }
+        else if recPos.y + (recSize.height / 2) > yBotBoundary &&  recPos.x - (recSize.width / 2) < xLeftBoundary{
+            return CGPoint(x:(imageCenterX - imageSize.width / 2 + 16) + recSize.width / 2, y: imageCenterY + ((imageSize.height - 30) / 2) - (recSize.height / 2))
         }
         
         // Top
@@ -112,8 +118,11 @@ struct ImageCropperView: View {
         }
         
         // Left
-        if recPos.x - (recSize.width / 2) < xLeftBoundary {
+        if recPos.x - (recSize.width / 2) < xLeftBoundary && imageSize.width == screenSize.width {
             return CGPoint(x:(imageSize.width / 2 + (recSize.width / 2)) - imageCenterX + 16, y: recPos.y)
+        }
+        else if recPos.x - (recSize.width / 2) < xLeftBoundary{ // for the "taller" image
+            return CGPoint(x:(imageCenterX - imageSize.width / 2 + 16) + recSize.width / 2, y: recPos.y)
         }
         
         // Right
