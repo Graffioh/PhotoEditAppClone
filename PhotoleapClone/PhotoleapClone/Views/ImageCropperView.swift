@@ -12,17 +12,14 @@ struct ImageCropperView: View {
     
     @ObservedObject var imageEnt: ImageModel
     
-    @State var imageSize: CGSize = .zero // << or initial from NSImage
+    @State var imageSize: CGSize = .zero
     
     @State var isDragging: Bool = false
     @GestureState var locationState: CGPoint = CGPoint(x: 100, y: 100)
     
-    @State var centerRecLocation: CGPoint = CGPoint(x: 200, y: 400)
+    @State var centerRecLocation: CGPoint = CGPoint(x: 210, y: 420)
     
-    @State var topRecLocation: CGPoint = CGPoint(x:200, y:400)
-    
-    let recWidth: Double = 50
-    let recHeight: Double = 50
+    let recSize: CGSize = CGSize(width: 120, height: 60)
     
     func cropImage(_ inputImage: UIImage, toRect cropRect: CGRect, viewWidth: CGFloat, viewHeight: CGFloat) -> UIImage?
     {
@@ -58,26 +55,84 @@ struct ImageCropperView: View {
     }
     
     private func checkIfOut(recPos: CGPoint, imageSize: CGSize, screenSize: CGSize ) -> Bool {
-        let yTopBoundary = ((screenSize.height + 81) - imageSize.height) / 2
-        let yBotBoundary = ((screenSize.height + 81) - imageSize.height) / 2 + imageSize.height - 32
-        let xLeftBoundary = ((screenSize.width - imageSize.width) / 2) + 14
-        let xRightBoundary = xLeftBoundary + imageSize.width - 28
+        let yTopBoundary = (screenSize.height - imageSize.height + 30) / 2 // + 30 because imageSize y is not 100 correct
+        let yBotBoundary = ((screenSize.height) - imageSize.height) / 2 + imageSize.height - 15
+        let xLeftBoundary = ((screenSize.width - imageSize.width) / 2) + 16
+        let xRightBoundary = xLeftBoundary + imageSize.width - 32
         
-        if((recPos.y + 81 - (recHeight / 2)) < yTopBoundary || (recPos.y + 81 + (recHeight / 2)) > yBotBoundary || (recPos.x - (recWidth / 2)) < xLeftBoundary || (recPos.x + (recWidth / 2)) > xRightBoundary){
+//        if(recPos.y - recSize.height < yTopBoundary || (recPos.y + (recSize.height / 2)) > yBotBoundary || (recPos.x - (recSize.width / 2)) < xLeftBoundary || (recPos.x + (recSize.width / 2)) > xRightBoundary){
+        if recPos.y - (recSize.height / 2) < yTopBoundary || recPos.y + (recSize.height / 2) > yBotBoundary || recPos.x - (recSize.width / 2) < xLeftBoundary || recPos.x + (recSize.width / 2) > xRightBoundary {
             return true
         }
            return false
     }
     
+    private func outOfBounds(recPos: CGPoint, imageSize: CGSize, screenSize: CGSize) -> CGPoint {
+        let yTopBoundary = (screenSize.height - imageSize.height + 30) / 2
+        let yBotBoundary = ((screenSize.height) - imageSize.height) / 2 + imageSize.height - 16
+        let xLeftBoundary = ((screenSize.width - imageSize.width) / 2) + 16
+        let xRightBoundary = xLeftBoundary + imageSize.width - 32
+        
+        // From the image center I will use a sort of offset to see where the rectangle needs to stop
+        let imageCenterY = (screenSize.height / 2)
+        let imageCenterX = (screenSize.width / 2)
+        
+//        if((recPos.y + 81 - (recHeight / 2)) < yTopBoundary || (recPos.y + 81 + (recHeight / 2)) > yBotBoundary || (recPos.x - (recWidth / 2)) < xLeftBoundary || (recPos.x + (recWidth / 2)) > xRightBoundary){
+//
+//        }
+        
+        // Top Right
+        if recPos.x + (recSize.width / 2) > xRightBoundary &&  recPos.y - (recSize.height / 2) < yTopBoundary{
+            return CGPoint(x:(imageSize.width / 2 - (recSize.width / 2)) + imageCenterX - 16, y: imageCenterY - ((imageSize.height - 30) / 2) + (recSize.height / 2))
+        }
+        
+        // Bot Right
+        if recPos.y + (recSize.height / 2) > yBotBoundary &&  recPos.x + (recSize.width / 2) > xRightBoundary{
+            return CGPoint(x:(imageSize.width / 2 - (recSize.width / 2)) + imageCenterX - 16, y: imageCenterY + ((imageSize.height - 30) / 2) - (recSize.height / 2))
+        }
+        
+        // Top Left
+        if recPos.y - (recSize.height / 2) < yTopBoundary &&  recPos.x - (recSize.width / 2) < xLeftBoundary{
+            return CGPoint(x:(imageSize.width / 2 + (recSize.width / 2)) - imageCenterX + 16, y: imageCenterY - ((imageSize.height - 30) / 2) + (recSize.height / 2))
+        }
+        
+        // Bot Left
+        if recPos.y + (recSize.height / 2) > yBotBoundary &&  recPos.x - (recSize.width / 2) < xLeftBoundary{
+            return CGPoint(x:imageSize.width / 2 + (recSize.width / 2) - imageCenterX + 16, y: imageCenterY + ((imageSize.height - 30) / 2) - (recSize.height / 2))
+        }
+        
+        // Top
+        if recPos.y - (recSize.height / 2) < yTopBoundary {
+            return CGPoint(x: recPos.x, y: imageCenterY - ((imageSize.height - 30) / 2) + (recSize.height / 2))
+        }
+        
+        // Bot
+        if recPos.y + (recSize.height / 2) > yBotBoundary {
+            return CGPoint(x: recPos.x, y: imageCenterY + ((imageSize.height - 30) / 2) - (recSize.height / 2))
+        }
+        
+        // Left
+        if recPos.x - (recSize.width / 2) < xLeftBoundary {
+            return CGPoint(x:(imageSize.width / 2 + (recSize.width / 2)) - imageCenterX + 16, y: recPos.y)
+        }
+        
+        // Right
+        if recPos.x + (recSize.width / 2) > xRightBoundary {
+            return CGPoint(x:(imageSize.width / 2 - (recSize.width / 2)) + imageCenterX - 16, y: recPos.y)
+        }
+        
+        return CGPoint(x: recPos.x, y: recPos.y)
+    }
+    
     var body: some View {
         GeometryReader { proxy in
-            let yScreenSize = proxy.size.height + 81 // I don't know why + 81 but it give the right result *skull-emoji*
+            let yScreenSize = proxy.size.height // I don't know why + 81 but it give the right result *skull-emoji*
             let xScreenSize = proxy.size.width
             
             NavigationStack{
                 ZStack{
                     Color(red:18 / 255, green:18 / 255, blue:18 / 255)
-                    //.edgesIgnoringSafeArea(.all)
+                    
                     VStack{
                         
                         HStack{
@@ -106,6 +161,7 @@ struct ImageCropperView: View {
                                         .saturation(imageEnt.saturationAdjust)
                                         .blur(radius: imageEnt.blurIntensity)
                                         .background(rectReader())
+                                        .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
                                         .onTapGesture {
                                             print("x screen size: \(xScreenSize) | y screen size: \(yScreenSize) | x distance: \((xScreenSize - imageSize.width) / 2)  | y distance: \((yScreenSize - imageSize.height) / 2) | x image size: \(imageSize.width) | y image size: \(imageSize.height)")
                                 }
@@ -113,7 +169,7 @@ struct ImageCropperView: View {
                             
                             ZStack{
                                 Rectangle()
-                                    .frame(width: 50, height: 50)
+                                    .frame(width: recSize.width, height: recSize.height)
                                     .foregroundColor(.green)
                                     .position(centerRecLocation)
                                     .gesture(
@@ -121,13 +177,11 @@ struct ImageCropperView: View {
                                             .onChanged{ state in
                                                 centerRecLocation = state.location
                                                 
-                                                if(checkIfOut(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size)){
-                                                    centerRecLocation = CGPoint(x: proxy.size.width / 2, y: proxy.size.height / 2)
-                                                }
+                                            if(checkIfOut(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size)){
+                                                centerRecLocation = outOfBounds(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size)
                                                 
-//                                                if(checkIfOut(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size)){
-//
-//                                                }
+                                               //print("hi")
+                                            }
                                                 
 //                                                print("x CENTER rec: \(centerRecLocation.x) & y  CENTER rec: \(centerRecLocation.y + 81)")
 
