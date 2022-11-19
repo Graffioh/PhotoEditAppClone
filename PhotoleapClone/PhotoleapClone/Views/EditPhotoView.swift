@@ -10,17 +10,16 @@ struct EditPhotoView: View {
     @State private var selectedImageData: Data? = nil
     
     // CropImage vars
-    //@State private var showImageCropper = false
     @State private var tempInputImage: UIImage?
     
     @State private var showImageEnhancer = false
     @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, imageUI: UIImage(named: "image1")!)
 
     // func to crop the img
-      func imageCropped(image: UIImage){
-        self.tempInputImage = nil
-          imageEnt.imageUI = image
-      }
+//      func imageCropped(image: UIImage){
+//        self.tempInputImage = nil
+//          imageEnt.imageUI = image
+//      }
     
     // func to update the image based on the one picked in the gallery
     func updateImg(){
@@ -61,7 +60,6 @@ struct EditPhotoView: View {
                                 .font(.system(size:26))
                         }
                         .fullScreenCover(isPresented: $imageEnt.showCropper) {
-                            //ImageCropper(image: $imageEnt.imageUI, visible: $imageEnt.showCropper,done: self.imageCropped).zIndex(10)
                                 ImageCropperView(imageEnt: imageEnt)
                         }
                         
@@ -148,12 +146,6 @@ struct EditPhotoView: View {
                     }
                 }
             }
-            
-            // Crop tool logic (split-screen)
-            //        if showImageCropper {
-            //            ImageCropper(image: self.$image1, visible: self.$showImageCropper,done: self.imageCropped).zIndex(10)
-            //        }
-//        }
     }
 }
 

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		06103DEE2923F132001CBE9B /* ImageCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06103DED2923F132001CBE9B /* ImageCropper.swift */; };
+		06295D1529292D73007CEA95 /* ImageCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06295D1429292D73007CEA95 /* ImageCropper.swift */; };
 		0631632429256ADE00E92E11 /* ImageCropperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0631632329256ADE00E92E11 /* ImageCropperView.swift */; };
 		064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */; };
 		064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5BBA2923D24800C9932F /* EditPhotoView.swift */; };
@@ -21,7 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		06103DED2923F132001CBE9B /* ImageCropper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropper.swift; sourceTree = "<group>"; };
+		06295D1429292D73007CEA95 /* ImageCropper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropper.swift; sourceTree = "<group>"; };
 		0631632329256ADE00E92E11 /* ImageCropperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropperView.swift; sourceTree = "<group>"; };
 		064F5BB52923D24700C9932F /* PhotoleapClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoleapClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoleapCloneApp.swift; sourceTree = "<group>"; };
@@ -114,8 +114,8 @@
 		067592A52924270100AAFBFE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				06103DED2923F132001CBE9B /* ImageCropper.swift */,
 				067592A32924244900AAFBFE /* ImageSaver.swift */,
+				06295D1429292D73007CEA95 /* ImageCropper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -201,8 +201,8 @@
 				067592AA2924E4AA00AAFBFE /* ImageModel.swift in Sources */,
 				064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */,
 				0631632429256ADE00E92E11 /* ImageCropperView.swift in Sources */,
-				06103DEE2923F132001CBE9B /* ImageCropper.swift in Sources */,
 				067592A42924244900AAFBFE /* ImageSaver.swift in Sources */,
+				06295D1529292D73007CEA95 /* ImageCropper.swift in Sources */,
 				067592A82924E02700AAFBFE /* ImageEnhancerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

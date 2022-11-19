@@ -21,21 +21,33 @@ struct ImageEnhancerView: View {
                     HStack{
                         Button {
                             imageEnt.showEnhancer.toggle()
-                        } label: {
-                            Image(systemName: "xmark")
-                                .font(.system(size: 20))
-                        }
-                        
-                        Spacer()
-                        
-                        Button {
+                            
                             imageEnt.blurIntensity = 0
                             imageEnt.contrastAdjust = 1
                             imageEnt.opacityAdjust = 1
                             imageEnt.brightnessAdjust = 0
                             imageEnt.saturationAdjust = 1
                         } label: {
-                            Text("Reset")
+                            Image(systemName: "xmark")
+                                .font(.system(size: 20))
+                        }
+                        
+//                        Button {
+//                            imageEnt.blurIntensity = 0
+//                            imageEnt.contrastAdjust = 1
+//                            imageEnt.opacityAdjust = 1
+//                            imageEnt.brightnessAdjust = 0
+//                            imageEnt.saturationAdjust = 1
+//                        } label: {
+//                            Text("Reset")
+//                        }
+                        
+                        Spacer()
+                        
+                        Button {
+                            imageEnt.showEnhancer.toggle()
+                        } label: {
+                            Text("Done")
                         }
                     }
                     
@@ -91,16 +103,6 @@ struct ImageEnhancerView: View {
                     }.padding(.horizontal, 30)
                 }
                 .padding(.bottom,30)
-//                .toolbar {
-//                    ToolbarItem(placement: .navigationBarLeading) {
-//                        Button {
-//                            imageEnt.showEnhancer.toggle()
-//                        } label: {
-//                            Text("X")
-//                        }
-//                    }
-//                }
-                
             }
         }
     }
