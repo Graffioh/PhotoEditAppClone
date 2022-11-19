@@ -21,7 +21,7 @@ struct ImageCropperView: View {
     @GestureState var locationState: CGPoint = CGPoint(x: 100, y: 100)
     @State var centerRecLocation: CGPoint = CGPoint(x: 210, y: 420)
     
-    @State var recSize: CGSize = CGSize(width: 120, height: 200)
+    @State var recSize: CGSize = CGSize(width: 100, height: 100)
     
     func cropImage(_ inputImage: UIImage, toRect cropRect: CGRect, viewWidth: CGFloat, viewHeight: CGFloat) -> UIImage?
     {
@@ -152,6 +152,17 @@ struct ImageCropperView: View {
                             }
                             
                             Spacer()
+                            
+                            Button {
+                                originX = (centerRecLocation.x - (proxy.size.width - imageSize.width) / 2) - (recSize.width / 2)
+                                originY = (centerRecLocation.y - (proxy.size.height - imageSize.height) / 2) - (recSize.height / 2)
+                                
+                                imageEnt.imageUI = cropImage(imageEnt.imageUI!, toRect: CGRect(origin: CGPoint(x: originX, y: originY), size: CGSize(width: recSize.width, height: recSize.height)), viewWidth: proxy.size.width, viewHeight: proxy.size.height)
+                                
+                                    imageEnt.showCropper.toggle()
+                            } label: {
+                                Text("Done")
+                            }
                         }
                         
                         .padding()
@@ -179,7 +190,7 @@ struct ImageCropperView: View {
                                 Rectangle()
                                     .frame(width: recSize.width, height: recSize.height)
                                     .foregroundColor(.green)
-                                    .opacity(0.1)
+                                    .opacity(0.01)
                                     .border(.white,width: 4)
                                     .position(centerRecLocation)
                                     .gesture(
@@ -189,10 +200,6 @@ struct ImageCropperView: View {
                                                 
                                             if(checkIfOut(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size)){
                                                 centerRecLocation = outOfBounds(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size)
-                                                
-                                                
-                                                
-                                               //print("hi")
                                             }
                                                 
 //                                                print("x CENTER rec: \(centerRecLocation.x) & y  CENTER rec: \(centerRecLocation.y + 81)")
@@ -209,40 +216,23 @@ struct ImageCropperView: View {
                                             }
                                     )
                                 
-                            //let circlePosition: CGPoint = CGPoint(x: centerRecLocation.x + (recSize.width / 2), y: centerRecLocation.y + (recSize.height / 2))
+                        let circlePosition: CGPoint = CGPoint(x: centerRecLocation.x + (recSize.width / 2), y: centerRecLocation.y + (recSize.height / 2))
 
 
-//                                Circle()
-//                                    .frame(width: 20, height: 20)
-//                                    .foregroundColor(.red)
-//                                    .position(circlePosition)
-//                                .gesture(
-//                                    DragGesture()
-//                                        .onChanged{ value in
-//                                            recSize.height = min(max(100, value.translation.width + recSize.height), imageSize.height - 30)
-//                                            recSize.width = min(max(100, value.translation.height + recSize.width), imageSize.width - 30)
-//                                            }
-//                                    )
+                                Circle()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(.red)
+                                    .opacity(0.5)
+                                    .position(circlePosition)
+                                .gesture(
+                                    DragGesture()
+                                        .onChanged{ value in
+                                            recSize.height = min(max(100, (value.translation.height + recSize.height)), imageSize.height - 30)
+                                            recSize.width = min(max(100, (value.translation.width + recSize.width)), imageSize.width - 30)
+                                            }
+                                    )
                             }
                             
-                        }
-                            
-                        Button {
-                            
-                            if imageSize.width == proxy.size.width { // wtf is this bro
-                                originX = (centerRecLocation.x - (proxy.size.width - imageSize.width) / 2) - (recSize.width / 2)
-                                originY = (centerRecLocation.y - (proxy.size.height - imageSize.height) / 2) - (recSize.height / 2)
-                            }
-                            else
-                            {
-                                originX = (centerRecLocation.x - (proxy.size.width - imageSize.width) / 2) - (recSize.width / 2) + 20
-                                originY = (centerRecLocation.y - (proxy.size.height - imageSize.height) / 2) - (recSize.height / 2) + 81
-                            }
-                            
-                            imageEnt.imageUI = cropImage(imageEnt.imageUI!, toRect: CGRect(origin: CGPoint(x: originX, y: originY), size: CGSize(width: recSize.width, height: recSize.height)), viewWidth: proxy.size.width, viewHeight: proxy.size.height)
-                        } label: {
-                            Text("Crop")
-                                .font(.system(size: 30))
                         }
                         
                         Spacer()
