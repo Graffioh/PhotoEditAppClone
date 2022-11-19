@@ -4,8 +4,6 @@ import CropViewController
 import PhotosUI
 
 struct EditPhotoView: View {
-    // Placeholder image
-    //@State var image1: UIImage? = UIImage(named: "image1")!
     
     // PhotoPicker vars
     @State private var selectedItem: PhotosPickerItem? = nil
@@ -16,12 +14,11 @@ struct EditPhotoView: View {
     @State private var tempInputImage: UIImage?
     
     @State private var showImageEnhancer = false
-    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, imageUI: UIImage(named: "image2")!)
+    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, imageUI: UIImage(named: "image1")!)
 
     // func to crop the img
       func imageCropped(image: UIImage){
         self.tempInputImage = nil
-          //self.image1 = image
           imageEnt.imageUI = image
       }
     
@@ -29,7 +26,6 @@ struct EditPhotoView: View {
     func updateImg(){
         if let selectedImageData,
            let uiImage = UIImage(data: selectedImageData) {
-            //image1 = uiImage
             imageEnt.imageUI = uiImage.fixOrientation()
         }
     }
@@ -37,9 +33,6 @@ struct EditPhotoView: View {
     var body: some View {
             
             NavigationView {
-//                ZStack {
-//                    Color(.)
-//                        .edgesIgnoringSafeArea(.all)
                 VStack{
                     
                     Spacer()
@@ -57,21 +50,6 @@ struct EditPhotoView: View {
                     }
                     
                     Spacer()
-                    
-//                    HStack{
-//                        Image(systemName: "arrow.turn.up.left")
-//                            .padding(.bottom, 30)
-//                            .font(.system(size:26))
-//
-//                        Image(systemName: "arrow.turn.up.right")
-//                            .padding(.bottom, 30)
-//                            .font(.system(size:26))
-//                            .padding(.leading,20)
-//
-//                        Spacer()
-//
-//                    }
-//                    .padding(.leading)
                     
                     HStack{
                         // Image cropper tool

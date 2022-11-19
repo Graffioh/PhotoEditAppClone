@@ -27,6 +27,16 @@ struct ImageEnhancerView: View {
                         }
                         
                         Spacer()
+                        
+                        Button {
+                            imageEnt.blurIntensity = 0
+                            imageEnt.contrastAdjust = 1
+                            imageEnt.opacityAdjust = 1
+                            imageEnt.brightnessAdjust = 0
+                            imageEnt.saturationAdjust = 1
+                        } label: {
+                            Text("Reset")
+                        }
                     }
                     
                     .padding()
