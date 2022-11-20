@@ -3,7 +3,6 @@ import SwiftUI
 
 struct Line {
     var points: [CGPoint] = []
-    var color: Color = .red
     var lineWidth: Double = 4.0
 }
 
@@ -14,6 +13,8 @@ struct ImagePainterView: View {
     
     @State var currentLine = Line()
     @State var lines: [Line] = []
+    
+    @State var pickedColor: Color = .red
     
     @State private var showingAlert = false
     
@@ -41,6 +42,42 @@ struct ImagePainterView: View {
                         }
                         
                         Spacer()
+                        
+                        Menu {
+                            Button {
+                                pickedColor = .red
+                            } label: {
+                                Text("Red")
+                            }
+                            
+                            Button {
+                                pickedColor = .green
+                            } label: {
+                                Text("Green")
+                            }
+
+                            Button {
+                                pickedColor = .blue
+                            } label: {
+                                Text("Blue")
+                            }
+                            
+                            Button {
+                                pickedColor = .black
+                            } label: {
+                                Text("Black")
+                            }
+                            
+                            Button {
+                                pickedColor = .white
+                            } label: {
+                                Text("White")
+                            }
+                        } label: {
+                            Image(systemName:"paintpalette")
+                                .font(.system(size: 24))
+                        }
+                        .padding(.trailing, 10)
                         
                         Button {
                             //imageEnt.showPainter.toggle()
@@ -75,7 +112,7 @@ struct ImagePainterView: View {
                         for line in lines{
                             var path = Path()
                             path.addLines(line.points)
-                            context.stroke(path, with: .color(line.color), lineWidth: line.lineWidth)
+                            context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
                         }
                     }
                     .frame(width: imageSize.width, height: imageSize.height)
