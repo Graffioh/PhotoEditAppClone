@@ -23,7 +23,6 @@ struct ImageCropperView: View {
         return GeometryReader { (geometry) -> Color in
             let imageSize = geometry.size
             DispatchQueue.main.async {
-                //print(">> \(imageSize)") // use image actual size in your calculations
                 self.imageSize = imageSize
             }
             return .clear
