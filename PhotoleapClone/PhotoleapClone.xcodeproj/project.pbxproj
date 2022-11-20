@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		06295D1529292D73007CEA95 /* ImageCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06295D1429292D73007CEA95 /* ImageCropper.swift */; };
+		06295D1729294426007CEA95 /* ImagePainterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06295D1629294426007CEA95 /* ImagePainterView.swift */; };
 		0631632429256ADE00E92E11 /* ImageCropperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0631632329256ADE00E92E11 /* ImageCropperView.swift */; };
 		064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */; };
 		064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5BBA2923D24800C9932F /* EditPhotoView.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		06295D1429292D73007CEA95 /* ImageCropper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropper.swift; sourceTree = "<group>"; };
+		06295D1629294426007CEA95 /* ImagePainterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePainterView.swift; sourceTree = "<group>"; };
 		0631632329256ADE00E92E11 /* ImageCropperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropperView.swift; sourceTree = "<group>"; };
 		064F5BB52923D24700C9932F /* PhotoleapClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoleapClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoleapCloneApp.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				064F5BBA2923D24800C9932F /* EditPhotoView.swift */,
 				067592A72924E02700AAFBFE /* ImageEnhancerView.swift */,
 				0631632329256ADE00E92E11 /* ImageCropperView.swift */,
+				06295D1629294426007CEA95 /* ImagePainterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 			files = (
 				064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */,
 				067592AA2924E4AA00AAFBFE /* ImageModel.swift in Sources */,
+				06295D1729294426007CEA95 /* ImagePainterView.swift in Sources */,
 				064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */,
 				0631632429256ADE00E92E11 /* ImageCropperView.swift in Sources */,
 				067592A42924244900AAFBFE /* ImageSaver.swift in Sources */,

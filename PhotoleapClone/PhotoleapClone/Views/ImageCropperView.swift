@@ -93,8 +93,8 @@ struct ImageCropperView: View {
                                             .onChanged{ state in
                                                 centerRecLocation = state.location
                                                 
-                                                if(cropper.checkIfOut(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size, recSize: recSize)){
-                                                    centerRecLocation = cropper.outOfBounds(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size, recSize: recSize)
+                                                if(cropper.checkIfOutOfBounds(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size, recSize: recSize)){
+                                                    centerRecLocation = cropper.recPosInsideTheImage(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size, recSize: recSize)
                                                 }
                                                 
 //                                                print("x CENTER rec: \(centerRecLocation.x) & y  CENTER rec: \(centerRecLocation.y + 81)")

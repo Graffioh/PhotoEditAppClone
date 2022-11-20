@@ -10,9 +10,10 @@ class ImageModel: ObservableObject{
     @Published var saturationAdjust: Double
     @Published var showCropper: Bool
     @Published var showEnhancer: Bool
+    @Published var showPainter: Bool
     @Published var imageUI: UIImage?
     
-    init(blurIntensity: CGFloat, contrastAdjust: Double, opacityAdjust: Double, brightnessAdjust: Double, saturationAdjust: Double, showCropper: Bool, showEnhancer: Bool, imageUI: UIImage) {
+    init(blurIntensity: CGFloat, contrastAdjust: Double, opacityAdjust: Double, brightnessAdjust: Double, saturationAdjust: Double, showCropper: Bool, showEnhancer: Bool, showPainter: Bool, imageUI: UIImage) {
         self.blurIntensity = blurIntensity
         self.contrastAdjust = contrastAdjust
         self.opacityAdjust = opacityAdjust
@@ -20,6 +21,7 @@ class ImageModel: ObservableObject{
         self.saturationAdjust = saturationAdjust
         self.showCropper = showCropper
         self.showEnhancer = showEnhancer
+        self.showPainter = showPainter
         self.imageUI = imageUI
     }
 }

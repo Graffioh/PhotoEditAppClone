@@ -13,7 +13,7 @@ struct EditPhotoView: View {
     @State private var tempInputImage: UIImage?
     
     @State private var showImageEnhancer = false
-    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, imageUI: UIImage(named: "image1")!)
+    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, showPainter: false, imageUI: UIImage(named: "image1")!)
 
     // func to crop the img
 //      func imageCropped(image: UIImage){
@@ -26,6 +26,12 @@ struct EditPhotoView: View {
         if let selectedImageData,
            let uiImage = UIImage(data: selectedImageData) {
             imageEnt.imageUI = uiImage.fixOrientation()
+            
+            imageEnt.blurIntensity = 0
+            imageEnt.contrastAdjust = 1
+            imageEnt.opacityAdjust = 1
+            imageEnt.brightnessAdjust = 0
+            imageEnt.saturationAdjust = 1
         }
     }
     
@@ -75,19 +81,18 @@ struct EditPhotoView: View {
                             ImageEnhancerView(imageEnt: imageEnt)
                         }
                         
-                        Image(systemName: "eraser.line.dashed")
-                            .padding(8)
-                            .font(.system(size:26))
-                        
-                        Image(systemName: "paintbrush.pointed")
-                            .padding(8)
-                            .font(.system(size:26))
+                        Button {
+                            imageEnt.showPainter.toggle()
+                        } label: {
+                            Image(systemName: "paintbrush.pointed")
+                                .padding(8)
+                                .font(.system(size:26))
+                        }
+                        .fullScreenCover(isPresented: $imageEnt.showPainter) {
+                            ImagePainterView(imageEnt: imageEnt)
+                        }
                         
                         Image(systemName: "wand.and.stars")
-                            .padding(8)
-                            .font(.system(size:26))
-                        
-                        Image(systemName: "skew")
                             .padding(8)
                             .font(.system(size:26))
                         

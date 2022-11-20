@@ -38,7 +38,7 @@ class ImageCropper {
         return croppedImage
     }
     
-    func checkIfOut(recPos: CGPoint, imageSize: CGSize, screenSize: CGSize, recSize: CGSize ) -> Bool {
+    func checkIfOutOfBounds(recPos: CGPoint, imageSize: CGSize, screenSize: CGSize, recSize: CGSize ) -> Bool {
         let yTopBoundary = (screenSize.height - imageSize.height + 30) / 2 // + 30 because imageSize y is not 100 correct
         let yBotBoundary = ((screenSize.height) - imageSize.height) / 2 + imageSize.height - 15
         let xLeftBoundary = ((screenSize.width - imageSize.width) / 2) + 16
@@ -51,7 +51,7 @@ class ImageCropper {
            return false
     }
     
-    func outOfBounds(recPos: CGPoint, imageSize: CGSize, screenSize: CGSize, recSize: CGSize) -> CGPoint {
+    func recPosInsideTheImage(recPos: CGPoint, imageSize: CGSize, screenSize: CGSize, recSize: CGSize) -> CGPoint {
         let yTopBoundary = (screenSize.height - imageSize.height + 30) / 2
         let yBotBoundary = ((screenSize.height) - imageSize.height) / 2 + imageSize.height - 16
         let xLeftBoundary = ((screenSize.width - imageSize.width) / 2) + 16
