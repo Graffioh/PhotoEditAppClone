@@ -85,7 +85,7 @@ struct ImagePainterView: View {
                         } label: {
                             Text("Done")
                         }
-                        .alert("Sorry, saving is not implemented :(", isPresented: $showingAlert) {
+                        .alert("Sorry, saving is not implemented yet :(", isPresented: $showingAlert) {
                                     Button("OK", role: .cancel) { imageEnt.showPainter.toggle() }
                                 }
                     }

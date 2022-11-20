@@ -13,7 +13,7 @@ struct EditPhotoView: View {
     @State private var tempInputImage: UIImage?
     
     @State private var showImageEnhancer = false
-    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, showPainter: false, imageUI: UIImage(named: "image1")!)
+    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, showPainter: false, showInsertText: false, imageUI: UIImage(named: "image1")!)
 
     // func to crop the img
 //      func imageCropped(image: UIImage){
@@ -56,6 +56,7 @@ struct EditPhotoView: View {
                     
                     Spacer()
                     
+                    // This with modal or tabview?
                     HStack{
                         // Image cropper tool
                         Button {
@@ -96,10 +97,18 @@ struct EditPhotoView: View {
                             .padding(8)
                             .font(.system(size:26))
                         
-                        Image(systemName: "character")
-                            .padding(8)
-                            .font(.system(size:26))
-                    }
+                        Button {
+                            imageEnt.showInsertText.toggle()
+                        } label: {
+                            Image(systemName: "character")
+                                .padding(8)
+                                .font(.system(size:26))
+                        }
+                        .fullScreenCover(isPresented: $imageEnt.showInsertText) {
+                            InsertTextView(imageEnt: imageEnt)
+                        }
+                        
+                    }.padding(.bottom, 10)
                 }
                 .navigationTitle("PhotoEditClone")
                 .navigationBarTitleDisplayMode(.inline)
