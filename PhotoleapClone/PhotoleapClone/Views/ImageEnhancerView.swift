@@ -1,9 +1,3 @@
-//
-//  ImageEnhancerView.swift
-//  PhotoleapClone
-//
-//  Created by Umberto Breglia on 16/11/22.
-//
 
 import SwiftUI
 
@@ -70,7 +64,6 @@ struct ImageEnhancerView: View {
                             .blur(radius: imageEnt.blurIntensity)
                     }
                     
-                    
                     Spacer()
                     
                     HStack(spacing: 20){
@@ -114,8 +107,8 @@ struct ImageEnhancerView: View {
     }
 }
 
+// To save enhanced image in ImageRenderer
 private func imageVieww(imageEnt: ImageModel) -> some View {
-    
     Image(uiImage: imageEnt.imageUI!)
         .resizable()
         .scaledToFit()

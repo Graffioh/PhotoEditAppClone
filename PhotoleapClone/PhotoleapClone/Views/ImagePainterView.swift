@@ -82,6 +82,9 @@ struct ImagePainterView: View {
                         Button {
                             //imageEnt.showPainter.toggle()
                             showingAlert.toggle()
+                            
+//                            let renderer = ImageRenderer(content: ImagePainterView(imageEnt: imageEnt, imageSize: imageSize, currentLine: currentLine, lines: lines, pickedColor: pickedColor))
+//                            imageEnt.imageUI = renderer.uiImage
                         } label: {
                             Text("Done")
                         }
@@ -106,7 +109,7 @@ struct ImagePainterView: View {
                             .contrast(imageEnt.contrastAdjust)
                             .saturation(imageEnt.saturationAdjust)
                             .blur(radius: imageEnt.blurIntensity)
-                            .position(x: proxy.size.width / 2, y: (proxy.size.height / 2) - 40)
+                            .position(x: proxy.size.width / 2, y: proxy.size.height / 2.2)
                     
                     Canvas { context, size in
                         for line in lines{
@@ -115,11 +118,11 @@ struct ImagePainterView: View {
                             context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
                         }
                     }
-                    .frame(width: imageSize.width, height: imageSize.height)
+                    .frame(width: imageSize.width, height: imageSize.height - 30)
                     .gesture( DragGesture()
                         .onChanged(){ value in
                             // Getting our gesture location (idk why but the offset is needed)
-                            let newPoint = CGPoint(x: value.location.x, y: value.location.y)//(proxy.size.height / 3.4))
+                            let newPoint = CGPoint(x: value.location.x, y: value.location.y)
                             // Creating the current line by appending the new points
                             currentLine.points.append(newPoint)
                             // Appending the line created in the lines array

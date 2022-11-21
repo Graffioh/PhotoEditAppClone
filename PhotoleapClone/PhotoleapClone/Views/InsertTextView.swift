@@ -53,7 +53,7 @@ struct InsertTextView: View {
                                 .contrast(imageEnt.contrastAdjust)
                                 .saturation(imageEnt.saturationAdjust)
                                 .blur(radius: imageEnt.blurIntensity)
-                                //.position(x: proxy.size.width / 2, y: (proxy.size.height / 2) - 40)
+                                .position(x: proxy.size.width / 2, y: (proxy.size.height / 2.4))
                         }
                         
                         Text("\(txt)")
