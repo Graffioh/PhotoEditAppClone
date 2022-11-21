@@ -46,6 +46,9 @@ struct ImageEnhancerView: View {
                         
                         Button {
                             imageEnt.showEnhancer.toggle()
+                            
+                            let renderer = ImageRenderer(content: imageVieww(imageEnt: imageEnt))
+                            imageEnt.imageUI = renderer.uiImage
                         } label: {
                             Text("Done")
                         }
@@ -55,15 +58,18 @@ struct ImageEnhancerView: View {
                     
                      Spacer()
                     
-                    Image(uiImage: imageEnt.imageUI!)
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
-                        .opacity(imageEnt.opacityAdjust)
-                        .brightness(imageEnt.brightnessAdjust)
-                        .contrast(imageEnt.contrastAdjust)
-                        .saturation(imageEnt.saturationAdjust)
-                        .blur(radius: imageEnt.blurIntensity)
+                    if let image = imageEnt.imageUI{
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .padding()
+                            .opacity(imageEnt.opacityAdjust)
+                            .brightness(imageEnt.brightnessAdjust)
+                            .contrast(imageEnt.contrastAdjust)
+                            .saturation(imageEnt.saturationAdjust)
+                            .blur(radius: imageEnt.blurIntensity)
+                    }
+                    
                     
                     Spacer()
                     
@@ -106,6 +112,19 @@ struct ImageEnhancerView: View {
             }
         }
     }
+}
+
+private func imageVieww(imageEnt: ImageModel) -> some View {
+    
+    Image(uiImage: imageEnt.imageUI!)
+        .resizable()
+        .scaledToFit()
+        .padding()
+        .opacity(imageEnt.opacityAdjust)
+        .brightness(imageEnt.brightnessAdjust)
+        .contrast(imageEnt.contrastAdjust)
+        .saturation(imageEnt.saturationAdjust)
+        .blur(radius: imageEnt.blurIntensity)
 }
 
 //struct ImageEnhancerView_Previews: PreviewProvider {
