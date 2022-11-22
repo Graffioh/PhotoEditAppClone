@@ -23,6 +23,11 @@ struct InsertTextView: View {
                                 Image(systemName: "xmark")
                                     .font(.system(size: 20))
                             }
+                            
+                            Spacer()
+                            
+                            TextField("Insert text", text: $txt)
+                            .padding()
     
                             Spacer()
     
@@ -43,7 +48,7 @@ struct InsertTextView: View {
                         }
                         .padding()
     
-                        Spacer()
+                        //Spacer()
                         
                         ZStack{
                             if let image = imageEnt.imageUI {
@@ -62,20 +67,13 @@ struct InsertTextView: View {
                             Text("\(txt)")
                                 .font(.system(size: 32))
                                 .position(txtPos)
+                                .foregroundColor(.red)
                                 .gesture(DragGesture()
                                     .onChanged{ state in
                                         txtPos = state.location
                                     }
                                 )
-                            
-                            
                         }
-                        //Spacer()
-                        
-                        TextField("Insert text", text: $txt)
-                        .padding()
-                        
-                        Spacer()
                     }
                 }
             }
@@ -102,6 +100,7 @@ private func imageWithTextView(imageEnt: ImageModel, txt: String, txtPos: CGPoin
             Text("\(txt)")
                 .font(.system(size: 32))
                 .position(txtPos)
+                .foregroundColor(.red)
         }
     
 }

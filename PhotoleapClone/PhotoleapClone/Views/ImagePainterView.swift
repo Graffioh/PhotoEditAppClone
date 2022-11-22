@@ -169,31 +169,15 @@ struct ImagePainterView: View {
 
 private func imageWithPaintingView(imageEnt: ImageModel, lines: [Line], pickedColor: Color, imageSize: CGSize) -> some View {
     
-    ZStack{
-//        if let image = imageEnt.imageUI {
-//            Image(uiImage: image)
-//                .resizable()
-//                .scaledToFit()
-//                .padding()
-//                //.frame(width: imageSize.width, height: imageSize.height + 20) // with this the image is like Minecraft but the paint is right, without this the image size is too big
-//                //.position(x: proxy.size.width / 2, y: proxy.size.height / 2.2)
-//                .opacity(imageEnt.opacityAdjust)
-//                .brightness(imageEnt.brightnessAdjust)
-//                .contrast(imageEnt.contrastAdjust)
-//                .saturation(imageEnt.saturationAdjust)
-//                .blur(radius: imageEnt.blurIntensity)
-            
-            Canvas { context, size in
-                for line in lines{
-                    var path = Path()
-                    path.addLines(line.points)
-                    context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
-                }
+        Canvas { context, size in
+            for line in lines{
+                var path = Path()
+                path.addLines(line.points)
+                context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
             }
-            .frame(width: imageSize.width, height: imageSize.height - 30)
-            
         }
-    //}
+        .frame(width: imageSize.width, height: imageSize.height - 30)
+        
 }
 
 
