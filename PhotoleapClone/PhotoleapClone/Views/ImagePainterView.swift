@@ -80,15 +80,15 @@ struct ImagePainterView: View {
                         .padding(.trailing, 10)
                         
                         Button {
-                            //imageEnt.showPainter.toggle()
+//                            imageEnt.showPainter.toggle()
                             showingAlert.toggle()
                             
-//                            let renderer = ImageRenderer(content: ImagePainterView(imageEnt: imageEnt, imageSize: imageSize, currentLine: currentLine, lines: lines, pickedColor: pickedColor))
-//                            imageEnt.imageUI = renderer.uiImage
+                            let renderer = ImageRenderer(content: imagePainterVieww(imageEnt: imageEnt, lines: lines, pickedColor: pickedColor, imageSize: imageSize))
+                            imageEnt.imageUI = renderer.uiImage
                         } label: {
                             Text("Done")
                         }
-                        .alert("Sorry, saving is not implemented yet :(", isPresented: $showingAlert) {
+                        .alert("Sorry, it doesn't work very well :(", isPresented: $showingAlert) {
                                     Button("OK", role: .cancel) { imageEnt.showPainter.toggle() }
                                 }
                     }
@@ -101,6 +101,7 @@ struct ImagePainterView: View {
                     if let image = imageEnt.imageUI {
                         Image(uiImage: image)
                             .resizable()
+                            .interpolation(.none)
                             .scaledToFit()
                             .padding()
                             .background(rectReader2())
@@ -168,8 +169,10 @@ struct ImagePainterView: View {
             }
         }
     }
+
 }
 
+// old drawing thing
 //struct DrawShape: Shape {
 //
 //    var lines: [Line]
@@ -185,6 +188,37 @@ struct ImagePainterView: View {
 //        return path
 //    }
 //}
+
+private func imagePainterVieww(imageEnt: ImageModel, lines: [Line], pickedColor: Color, imageSize: CGSize) -> some View {
+    
+    ZStack{
+        if let image = imageEnt.imageUI {
+            Image(uiImage: image)
+                .resizable()
+                //.interpolation(.none)
+                .scaledToFit()
+                .padding()
+                //.frame(width: imageSize.width, height: imageSize.height + 20) // with this the image is like Minecraft but the paint is right, without this the image size is too big
+                .opacity(imageEnt.opacityAdjust)
+                .brightness(imageEnt.brightnessAdjust)
+                .contrast(imageEnt.contrastAdjust)
+                .saturation(imageEnt.saturationAdjust)
+                .blur(radius: imageEnt.blurIntensity)
+            //.position(x: proxy.size.width / 2, y: proxy.size.height / 2.2)
+            
+            Canvas { context, size in
+                for line in lines{
+                    var path = Path()
+                    path.addLines(line.points)
+                    context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
+                }
+            }
+            .frame(width: imageSize.width, height: imageSize.height - 30)
+            
+        }
+    }
+}
+
 
 extension UIImageView {
     var contentRect2: CGRect {
@@ -206,30 +240,6 @@ extension UIImageView {
         return CGRect(x: x, y: y, width: size.width, height: size.height)
     }
 }
-
-//extension UIView {
-//    func asImage() -> UIImage {
-//        if #available(iOS 10.0, *) {
-//            let renderer = UIGraphicsImageRenderer(bounds: bounds)
-//            return renderer.image { rendererContext in
-//                layer.render(in: rendererContext.cgContext)
-//            }
-//        } else {
-//            UIGraphicsBeginImageContext(self.frame.size)
-//            self.layer.render(in:UIGraphicsGetCurrentContext()!)
-//            let image = UIGraphicsGetImageFromCurrentImageContext()
-//            UIGraphicsEndImageContext()
-//            return UIImage(cgImage: image!.cgImage!)
-//        }
-//    }
-//    func asImages() -> UIImage {
-//        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-//        return renderer.image { rendererContext in
-//            layer.render(in: rendererContext.cgContext)
-//        }
-//    }
-//}
-
 
 //struct ImagePainterView_Previews: PreviewProvider {
 //    static var previews: some View {
