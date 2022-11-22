@@ -56,6 +56,7 @@ struct ImageCropperView: View {
                                     imageEnt.showCropper.toggle()
                             } label: {
                                 Text("Done")
+                                    .foregroundColor(.yellow)
                             }
                         }
                         

@@ -14,8 +14,6 @@
 		064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064F5BBA2923D24800C9932F /* EditPhotoView.swift */; };
 		064F5BBD2923D24800C9932F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 064F5BBC2923D24800C9932F /* Assets.xcassets */; };
 		064F5BC02923D24800C9932F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 064F5BBF2923D24800C9932F /* Preview Assets.xcassets */; };
-		06743C7C2923EC67000C06D1 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 06743C7B2923EC67000C06D1 /* CropViewController */; };
-		06743C7E2923EC67000C06D1 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 06743C7D2923EC67000C06D1 /* TOCropViewController */; };
 		067592A42924244900AAFBFE /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067592A32924244900AAFBFE /* ImageSaver.swift */; };
 		067592A82924E02700AAFBFE /* ImageEnhancerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067592A72924E02700AAFBFE /* ImageEnhancerView.swift */; };
 		067592AA2924E4AA00AAFBFE /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067592A92924E4AA00AAFBFE /* ImageModel.swift */; };
@@ -32,7 +30,6 @@
 		064F5BBC2923D24800C9932F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		064F5BBF2923D24800C9932F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		067592A32924244900AAFBFE /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
-		067592A62924D07F00AAFBFE /* TOCropViewController */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TOCropViewController; path = ../../../../Desktop/TOCropViewController; sourceTree = "<group>"; };
 		067592A72924E02700AAFBFE /* ImageEnhancerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEnhancerView.swift; sourceTree = "<group>"; };
 		067592A92924E4AA00AAFBFE /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		06C5FCFD292ABA1100ABA340 /* InsertTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertTextView.swift; sourceTree = "<group>"; };
@@ -43,8 +40,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06743C7E2923EC67000C06D1 /* TOCropViewController in Frameworks */,
-				06743C7C2923EC67000C06D1 /* CropViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,7 +49,6 @@
 		064F5BAC2923D24700C9932F = {
 			isa = PBXGroup;
 			children = (
-				067592A62924D07F00AAFBFE /* TOCropViewController */,
 				064F5BB72923D24700C9932F /* PhotoleapClone */,
 				064F5BB62923D24700C9932F /* Products */,
 			);
@@ -104,8 +98,8 @@
 		06743C782923D367000C06D1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				067592A52924270100AAFBFE /* Utils */,
 				067592A92924E4AA00AAFBFE /* ImageModel.swift */,
+				067592A52924270100AAFBFE /* Utils */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,8 +137,6 @@
 			);
 			name = PhotoleapClone;
 			packageProductDependencies = (
-				06743C7B2923EC67000C06D1 /* CropViewController */,
-				06743C7D2923EC67000C06D1 /* TOCropViewController */,
 			);
 			productName = PhotoleapClone;
 			productReference = 064F5BB52923D24700C9932F /* PhotoleapClone.app */;
@@ -175,7 +167,6 @@
 			);
 			mainGroup = 064F5BAC2923D24700C9932F;
 			packageReferences = (
-				06743C7A2923EC67000C06D1 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			productRefGroup = 064F5BB62923D24700C9932F /* Products */;
 			projectDirPath = "";
@@ -418,30 +409,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		06743C7A2923EC67000C06D1 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		06743C7B2923EC67000C06D1 /* CropViewController */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 06743C7A2923EC67000C06D1 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
-			productName = CropViewController;
-		};
-		06743C7D2923EC67000C06D1 /* TOCropViewController */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 06743C7A2923EC67000C06D1 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
-			productName = TOCropViewController;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 064F5BAD2923D24700C9932F /* Project object */;
 }

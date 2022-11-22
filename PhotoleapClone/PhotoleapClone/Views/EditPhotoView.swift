@@ -1,6 +1,5 @@
 
 import SwiftUI
-import CropViewController
 import PhotosUI
 
 struct EditPhotoView: View {
@@ -14,6 +13,12 @@ struct EditPhotoView: View {
     
     @State private var showImageEnhancer = false
     @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, showPainter: false, showInsertText: false, imageUI: UIImage(named: "image1")!)
+    
+    @State private var showingAlert = false
+    
+    @State private var paintImage: UIImage = UIImage()
+    
+    @State private var composedImage: UIImage = UIImage()
 
     // func to crop the img
 //      func imageCropped(image: UIImage){
@@ -42,27 +47,34 @@ struct EditPhotoView: View {
                     
                     Spacer()
                     
-                    if let image = imageEnt.imageUI {
-                        Image(uiImage: image)
+                    ZStack{
+                        if let image = imageEnt.imageUI {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                                .padding()
+                                .opacity(imageEnt.opacityAdjust)
+                                .brightness(imageEnt.brightnessAdjust)
+                                .contrast(imageEnt.contrastAdjust)
+                                .saturation(imageEnt.saturationAdjust)
+                                .blur(radius: imageEnt.blurIntensity)
+                        }
+                        
+                        Image(uiImage: paintImage)
                             .resizable()
                             .scaledToFit()
-                            .padding()
-                            .opacity(imageEnt.opacityAdjust)
-                            .brightness(imageEnt.brightnessAdjust)
-                            .contrast(imageEnt.contrastAdjust)
-                            .saturation(imageEnt.saturationAdjust)
-                            .blur(radius: imageEnt.blurIntensity)
                     }
+                    
                     
                     Spacer()
                     
-                    // This with modal or tabview?
                     HStack{
                         // Image cropper tool
                         Button {
                             imageEnt.showCropper.toggle()
                         } label: {
                             Image(systemName: "crop")
+                                .foregroundColor(.white)
                                 .padding(8)
                                 .font(.system(size:26))
                         }
@@ -75,6 +87,7 @@ struct EditPhotoView: View {
                             imageEnt.showEnhancer.toggle()
                         } label: {
                             Image(systemName: "slider.horizontal.3")
+                                .foregroundColor(.white)
                                 .padding(8)
                                 .font(.system(size:26))
                         }
@@ -86,14 +99,16 @@ struct EditPhotoView: View {
                             imageEnt.showPainter.toggle()
                         } label: {
                             Image(systemName: "paintbrush.pointed")
+                                .foregroundColor(.white)
                                 .padding(8)
                                 .font(.system(size:26))
                         }
                         .fullScreenCover(isPresented: $imageEnt.showPainter) {
-                            ImagePainterView(imageEnt: imageEnt)
+                            ImagePainterView(imageEnt: imageEnt, paintImage: $paintImage)
                         }
                         
                         Image(systemName: "wand.and.stars")
+                            .foregroundColor(.gray)
                             .padding(8)
                             .font(.system(size:26))
                         
@@ -101,6 +116,7 @@ struct EditPhotoView: View {
                             imageEnt.showInsertText.toggle()
                         } label: {
                             Image(systemName: "character")
+                                .foregroundColor(.white)
                                 .padding(8)
                                 .font(.system(size:26))
                         }
@@ -116,6 +132,7 @@ struct EditPhotoView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
                             Image(systemName: "photo")
+                                .foregroundColor(.white)
                         }
                         .onChange(of: selectedItem) { newItem in
                             Task {
@@ -130,17 +147,25 @@ struct EditPhotoView: View {
                     }
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button { // Save the image in the gallery
-                            //                        UIImageWriteToSavedPhotosAlbum(image1!, nil, nil, nil)
+                        Button {
+                            
+                            showingAlert.toggle()
+                            
+                            let renderer = ImageRenderer(content: imageComposedView(imageEnt: imageEnt, paintImage: paintImage))
+
+                            composedImage = renderer.uiImage!
                             
                             let imageSaver = ImageSaver()
                             
-                            imageSaver.writeToPhotoAlbum(image: imageEnt.imageUI!)
+                            imageSaver.writeToPhotoAlbum(image: composedImage)
                             
                         } label: {
                             Text("Save")
                                 .foregroundColor(.yellow)
                         }
+                        .alert("Image saved.", isPresented: $showingAlert) {
+                                    Button("OK", role: .cancel) { showingAlert.toggle() }
+                                }
                     }
                     
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -157,10 +182,33 @@ struct EditPhotoView: View {
                             .font(.system(size:20))
                             .foregroundColor(.white)
                         }
+                        }
                     }
                 }
             }
     }
+
+
+private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage) -> some View {
+    
+    ZStack{
+        if let image = imageEnt.imageUI {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+                .padding()
+                .opacity(imageEnt.opacityAdjust)
+                .brightness(imageEnt.brightnessAdjust)
+                .contrast(imageEnt.contrastAdjust)
+                .saturation(imageEnt.saturationAdjust)
+                .blur(radius: imageEnt.blurIntensity)
+        }
+        
+        Image(uiImage: paintImage)
+            .resizable()
+            .scaledToFit()
+    }
+    
 }
 
 // fix for camera-taken photos

@@ -41,10 +41,11 @@ struct ImageEnhancerView: View {
                         Button {
                             imageEnt.showEnhancer.toggle()
                             
-                            let renderer = ImageRenderer(content: imageVieww(imageEnt: imageEnt))
+                            let renderer = ImageRenderer(content: imageWithEnhancements(imageEnt: imageEnt))
                             imageEnt.imageUI = renderer.uiImage
                         } label: {
                             Text("Done")
+                                .foregroundColor(.yellow)
                         }
                     }
                     
@@ -108,7 +109,7 @@ struct ImageEnhancerView: View {
 }
 
 // To save enhanced image in ImageRenderer
-private func imageVieww(imageEnt: ImageModel) -> some View {
+private func imageWithEnhancements(imageEnt: ImageModel) -> some View {
     Image(uiImage: imageEnt.imageUI!)
         .resizable()
         .scaledToFit()

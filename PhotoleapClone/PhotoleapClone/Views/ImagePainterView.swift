@@ -18,6 +18,8 @@ struct ImagePainterView: View {
     
     @State private var showingAlert = false
     
+    @Binding var paintImage: UIImage
+    
     private func rectReader2() -> some View {
         return GeometryReader { (geometry) -> Color in
             let imageSize = geometry.size
@@ -80,17 +82,18 @@ struct ImagePainterView: View {
                         .padding(.trailing, 10)
                         
                         Button {
-//                            imageEnt.showPainter.toggle()
-                            showingAlert.toggle()
+                            imageEnt.showPainter.toggle()
                             
-                            let renderer = ImageRenderer(content: imagePainterVieww(imageEnt: imageEnt, lines: lines, pickedColor: pickedColor, imageSize: imageSize))
-                            imageEnt.imageUI = renderer.uiImage
+                            let renderer = ImageRenderer(content: imageWithPaintingView(imageEnt: imageEnt, lines: lines, pickedColor: pickedColor, imageSize: imageSize))
+
+                            paintImage = renderer.uiImage!
+                            
+                            // Clear previous painting
+                            lines.removeAll()
                         } label: {
                             Text("Done")
+                                .foregroundColor(.yellow)
                         }
-                        .alert("Sorry, it doesn't work very well :(", isPresented: $showingAlert) {
-                                    Button("OK", role: .cancel) { imageEnt.showPainter.toggle() }
-                                }
                     }
                     .padding()
                 
@@ -101,7 +104,6 @@ struct ImagePainterView: View {
                     if let image = imageEnt.imageUI {
                         Image(uiImage: image)
                             .resizable()
-                            .interpolation(.none)
                             .scaledToFit()
                             .padding()
                             .background(rectReader2())
@@ -135,31 +137,7 @@ struct ImagePainterView: View {
                         }
                     )
                     
-//                    if let image = imageEnt.imageUI {
-//                        Image(uiImage: image)
-//                            .resizable()
-//                            .scaledToFit()
-//                            .padding()
-//                            .opacity(imageEnt.opacityAdjust)
-//                            .brightness(imageEnt.brightnessAdjust)
-//                            .contrast(imageEnt.contrastAdjust)
-//                            .saturation(imageEnt.saturationAdjust)
-//                            .blur(radius: imageEnt.blurIntensity)
-//                            .gesture( DragGesture()
-//                                .onChanged(){ value in
-//                                    // Getting our gesture location (idk why but the offset is needed)
-//                                    let newPoint = CGPoint(x: value.location.x, y: value.location.y)//(proxy.size.height / 3.4))
-//                                    // Creating the current line by appending the new points
-//                                    currentLine.points.append(newPoint)
-//                                    // Appending the line created in the lines array
-//                                    self.lines.append(currentLine)
-//                                }
-//                                .onEnded(){ value in
-//                                    // To make separate lines by clearing the points that the previous line was made of
-//                                    self.currentLine = Line(points: [])
-//                                }
-//                            )
-                        }
+                }
                     
 //                    DrawShape(lines: lines)
 //                        .stroke(lineWidth: currentLine.lineWidth)
@@ -189,22 +167,21 @@ struct ImagePainterView: View {
 //    }
 //}
 
-private func imagePainterVieww(imageEnt: ImageModel, lines: [Line], pickedColor: Color, imageSize: CGSize) -> some View {
+private func imageWithPaintingView(imageEnt: ImageModel, lines: [Line], pickedColor: Color, imageSize: CGSize) -> some View {
     
     ZStack{
-        if let image = imageEnt.imageUI {
-            Image(uiImage: image)
-                .resizable()
-                //.interpolation(.none)
-                .scaledToFit()
-                .padding()
-                //.frame(width: imageSize.width, height: imageSize.height + 20) // with this the image is like Minecraft but the paint is right, without this the image size is too big
-                .opacity(imageEnt.opacityAdjust)
-                .brightness(imageEnt.brightnessAdjust)
-                .contrast(imageEnt.contrastAdjust)
-                .saturation(imageEnt.saturationAdjust)
-                .blur(radius: imageEnt.blurIntensity)
-            //.position(x: proxy.size.width / 2, y: proxy.size.height / 2.2)
+//        if let image = imageEnt.imageUI {
+//            Image(uiImage: image)
+//                .resizable()
+//                .scaledToFit()
+//                .padding()
+//                //.frame(width: imageSize.width, height: imageSize.height + 20) // with this the image is like Minecraft but the paint is right, without this the image size is too big
+//                //.position(x: proxy.size.width / 2, y: proxy.size.height / 2.2)
+//                .opacity(imageEnt.opacityAdjust)
+//                .brightness(imageEnt.brightnessAdjust)
+//                .contrast(imageEnt.contrastAdjust)
+//                .saturation(imageEnt.saturationAdjust)
+//                .blur(radius: imageEnt.blurIntensity)
             
             Canvas { context, size in
                 for line in lines{
@@ -216,7 +193,7 @@ private func imagePainterVieww(imageEnt: ImageModel, lines: [Line], pickedColor:
             .frame(width: imageSize.width, height: imageSize.height - 30)
             
         }
-    }
+    //}
 }
 
 

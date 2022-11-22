@@ -35,6 +35,7 @@ struct InsertTextView: View {
 //                                imageEnt.imageUI = renderer.uiImage
                                 } label: {
                                     Text("Done")
+                                        .foregroundColor(.yellow)
                                 }
                                 .alert("I don't think \"saving\" is possible with this implementation :(", isPresented: $showingAlert) {
                                             Button("OK", role: .cancel) { imageEnt.showInsertText.toggle() }
@@ -85,7 +86,7 @@ struct InsertTextView: View {
 
 
 
-private func imageTextView(imageEnt: ImageModel, txt: String, txtPos: CGPoint) -> some View {
+private func imageWithTextView(imageEnt: ImageModel, txt: String, txtPos: CGPoint) -> some View {
     
         ZStack{
             Image(uiImage: imageEnt.imageUI!)
