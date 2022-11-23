@@ -42,12 +42,21 @@ struct ImageCropperView: View {
                                 imageEnt.showCropper.toggle()
                             } label: {
                                 Image(systemName: "xmark")
+                                    .foregroundColor(.white)
                                     .font(.system(size: 20))
                             }
                             
                             Spacer()
                             
+                            Text("Crop")
+                                .foregroundColor(.white)
+                                .bold()
+                                .padding(.leading, 20)
+                            
+                            Spacer()
+                            
                             Button {
+                                // Where the magic happens (broken magic actually)
                                 originX = (centerRecLocation.x - (proxy.size.width - imageSize.width) / 2) - (recSize.width / 2)
                                 originY = (centerRecLocation.y - (proxy.size.height - imageSize.height) / 2) - (recSize.height / 2)
                                 
@@ -76,9 +85,9 @@ struct ImageCropperView: View {
                                         .blur(radius: imageEnt.blurIntensity)
                                         .background(rectReader())
                                         .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
-                                        .onTapGesture {
-                                            print("x screen size: \(proxy.size.width) | y screen size: \(proxy.size.height) | x distance: \((proxy.size.width - imageSize.width) / 2)  | y distance: \((proxy.size.height - imageSize.height) / 2) | x image size: \(imageSize.width) | y image size: \(imageSize.height)")
-                                }
+//                                        .onTapGesture { // DEBUG
+//                                            print("x screen size: \(proxy.size.width) | y screen size: \(proxy.size.height) | x distance: \((proxy.size.width - imageSize.width) / 2)  | y distance: \((proxy.size.height - imageSize.height) / 2) | x image size: \(imageSize.width) | y image size: \(imageSize.height)")
+//                                }
                             }
                             
                             ZStack{
@@ -97,6 +106,7 @@ struct ImageCropperView: View {
                                                     centerRecLocation = cropper.recPosInsideTheImage(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size, recSize: recSize)
                                                 }
                                                 
+                                                // DEBUG
 //                                                print("x CENTER rec: \(centerRecLocation.x) & y  CENTER rec: \(centerRecLocation.y + 81)")
 
 //                                                print("BOT image: \(((proxy.size.height + 81) - imageSize.height) / 2 + imageSize.height)")

@@ -4,11 +4,24 @@ import SwiftUI
 struct InsertTextView: View {
     
     @ObservedObject var imageEnt: ImageModel
+    @State var imageSize: CGSize = .zero
     
     @State var txt: String = ""
     @State var txtPos: CGPoint = CGPoint(x: 100, y: 200)
     
     @State private var showingAlert = false
+    
+    @Binding var textImage: UIImage
+    
+    private func rectReader3() -> some View {
+        return GeometryReader { (geometry) -> Color in
+            let imageSize = geometry.size
+            DispatchQueue.main.async {
+                self.imageSize = imageSize
+            }
+            return .clear
+        }
+    }
     
         var body: some View {
             GeometryReader{proxy in
@@ -21,41 +34,44 @@ struct InsertTextView: View {
                                 imageEnt.showInsertText.toggle()
                             } label: {
                                 Image(systemName: "xmark")
+                                    .foregroundColor(.white)
                                     .font(.system(size: 20))
                             }
                             
                             Spacer()
                             
                             TextField("Insert text", text: $txt)
-                            .padding()
+                                .padding()
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .cornerRadius(16)
+                            
     
                             Spacer()
     
                             Button {
-                                showingAlert.toggle()
-//                                imageEnt.showInsertText.toggle()
+//                                showingAlert.toggle()
+                                imageEnt.showInsertText.toggle()
     
-//                                let renderer = ImageRenderer(content: imageTextView(imageEnt: imageEnt, txt: txt, txtPos: txtPos))
-//
-//                                imageEnt.imageUI = renderer.uiImage
+                                let renderer = ImageRenderer(content: textView(imageEnt: imageEnt, txt: txt, txtPos: txtPos, imageSize: imageSize))
+
+                                textImage = renderer.uiImage!
                                 } label: {
                                     Text("Done")
                                         .foregroundColor(.yellow)
                                 }
-                                .alert("I don't think \"saving\" is possible with this implementation :(", isPresented: $showingAlert) {
-                                            Button("OK", role: .cancel) { imageEnt.showInsertText.toggle() }
-                                        }
+//                                .alert("Sorry, not working :(", isPresented: $showingAlert) {
+//                                            Button("OK", role: .cancel) { imageEnt.showInsertText.toggle() }
+//                                        }
                         }
                         .padding()
     
-                        //Spacer()
-                        
                         ZStack{
                             if let image = imageEnt.imageUI {
                                 Image(uiImage: image)
                                     .resizable()
                                     .scaledToFit()
                                     .padding()
+                                    .background(rectReader3())
                                     .opacity(imageEnt.opacityAdjust)
                                     .brightness(imageEnt.brightnessAdjust)
                                     .contrast(imageEnt.contrastAdjust)
@@ -84,24 +100,27 @@ struct InsertTextView: View {
 
 
 
-private func imageWithTextView(imageEnt: ImageModel, txt: String, txtPos: CGPoint) -> some View {
+private func textView(imageEnt: ImageModel, txt: String, txtPos: CGPoint, imageSize: CGSize) -> some View {
     
-        ZStack{
-            Image(uiImage: imageEnt.imageUI!)
-                .resizable()
-                .scaledToFit()
-                .padding()
-                .opacity(imageEnt.opacityAdjust)
-                .brightness(imageEnt.brightnessAdjust)
-                .contrast(imageEnt.contrastAdjust)
-                .saturation(imageEnt.saturationAdjust)
-                .blur(radius: imageEnt.blurIntensity)
+//        ZStack{
+//            Image(uiImage: imageEnt.imageUI!)
+//                .resizable()
+//                .scaledToFit()
+//                .padding()
+//                .opacity(imageEnt.opacityAdjust)
+//                .brightness(imageEnt.brightnessAdjust)
+//                .contrast(imageEnt.contrastAdjust)
+//                .saturation(imageEnt.saturationAdjust)
+//                .blur(radius: imageEnt.blurIntensity)
             
             Text("\(txt)")
                 .font(.system(size: 32))
-                .position(txtPos)
+                //.position(txtPos)
                 .foregroundColor(.red)
-        }
+                .frame(width: imageSize.width, height: imageSize.height - 30)
+    
+        // METtERE TEStoksmwasopmxsapokap
+        //}
     
 }
 

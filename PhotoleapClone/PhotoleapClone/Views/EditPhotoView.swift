@@ -8,26 +8,23 @@ struct EditPhotoView: View {
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
     
-    // CropImage vars
-    @State private var tempInputImage: UIImage?
-    
-    @State private var showImageEnhancer = false
+    // Image entity
     @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, showPainter: false, showInsertText: false, imageUI: UIImage(named: "image1")!)
     
+    // Bool for alert showing
     @State private var showingAlert = false
     
-    @State private var paintImage: UIImage = UIImage()
+    // Var used to show the painting on top of the current image
+    @State private var paintedImage: UIImage = UIImage()
     
+    // Var used to show the text on top of the current image
+    @State var textImage: UIImage = UIImage()
+    
+    // Final image that is going to be saved
     @State private var composedImage: UIImage = UIImage()
 
-    // func to crop the img
-//      func imageCropped(image: UIImage){
-//        self.tempInputImage = nil
-//          imageEnt.imageUI = image
-//      }
-    
     // func to update the image based on the one picked in the gallery
-    func updateImg(){
+    private func updateImg(){
         if let selectedImageData,
            let uiImage = UIImage(data: selectedImageData) {
             imageEnt.imageUI = uiImage.fixOrientation()
@@ -60,7 +57,11 @@ struct EditPhotoView: View {
                         .blur(radius: imageEnt.blurIntensity)
                 }
                 
-                Image(uiImage: paintImage)
+                Image(uiImage: textImage)
+                    .resizable()
+                    .scaledToFit()
+                
+                Image(uiImage: paintedImage)
                     .resizable()
                     .scaledToFit()
             }
@@ -95,6 +96,7 @@ struct EditPhotoView: View {
                     ImageEnhancerView(imageEnt: imageEnt)
                 }
                 
+                // Paint tool
                 Button {
                     imageEnt.showPainter.toggle()
                 } label: {
@@ -104,7 +106,7 @@ struct EditPhotoView: View {
                         .font(.system(size:26))
                 }
                 .fullScreenCover(isPresented: $imageEnt.showPainter) {
-                    ImagePainterView(imageEnt: imageEnt, paintImage: $paintImage)
+                    ImagePainterView(imageEnt: imageEnt, paintedImage: $paintedImage)
                 }
                 
                 Image(systemName: "wand.and.stars")
@@ -112,6 +114,7 @@ struct EditPhotoView: View {
                     .padding(8)
                     .font(.system(size:26))
                 
+                // Add text tool
                 Button {
                     imageEnt.showInsertText.toggle()
                 } label: {
@@ -121,7 +124,7 @@ struct EditPhotoView: View {
                         .font(.system(size:26))
                 }
                 .fullScreenCover(isPresented: $imageEnt.showInsertText) {
-                    InsertTextView(imageEnt: imageEnt)
+                    InsertTextView(imageEnt: imageEnt, textImage: $textImage)
                 }
                 
             }.padding(.bottom, 10)
@@ -151,7 +154,7 @@ struct EditPhotoView: View {
                     
                     showingAlert.toggle()
                     
-                    let renderer = ImageRenderer(content: imageComposedView(imageEnt: imageEnt, paintImage: paintImage))
+                    let renderer = ImageRenderer(content: imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage))
 
                     composedImage = renderer.uiImage!
                     
@@ -159,8 +162,10 @@ struct EditPhotoView: View {
                     
                     imageSaver.writeToPhotoAlbum(image: composedImage) // This mf save the image with a white border I don't know why
                     
+                    // Clear text
+                    textImage = UIImage() // Keep or remove?
                     // Clear painting
-                    paintImage = UIImage() // Keep or remove?
+                    paintedImage = UIImage() // Keep or remove?
                     
                 } label: {
                     Text("Save")
@@ -192,7 +197,7 @@ struct EditPhotoView: View {
 }
 
 
-private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage) -> some View {
+private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage, textImage: UIImage) -> some View {
     
     ZStack{
         if let image = imageEnt.imageUI {
@@ -206,6 +211,10 @@ private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage) -> som
                 .saturation(imageEnt.saturationAdjust)
                 .blur(radius: imageEnt.blurIntensity)
         }
+        
+        Image(uiImage: textImage)
+            .resizable()
+            .scaledToFit()
         
         Image(uiImage: paintImage)
             .resizable()

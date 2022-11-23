@@ -23,18 +23,16 @@ struct ImageEnhancerView: View {
                             imageEnt.saturationAdjust = 1
                         } label: {
                             Image(systemName: "xmark")
+                                .foregroundColor(.white)
                                 .font(.system(size: 20))
                         }
                         
-//                        Button {
-//                            imageEnt.blurIntensity = 0
-//                            imageEnt.contrastAdjust = 1
-//                            imageEnt.opacityAdjust = 1
-//                            imageEnt.brightnessAdjust = 0
-//                            imageEnt.saturationAdjust = 1
-//                        } label: {
-//                            Text("Reset")
-//                        }
+                        Spacer()
+                        
+                        Text("Enhance")
+                            .foregroundColor(.white)
+                            .bold()
+                            .padding(.leading, 20)
                         
                         Spacer()
                         
@@ -69,37 +67,37 @@ struct ImageEnhancerView: View {
                     
                     HStack(spacing: 20){
                         Text("Brightness")
-                            .foregroundColor(Color(.systemBlue))
+                            .foregroundColor(.white)
                         
-                        Slider(value: $imageEnt.brightnessAdjust, in: 0...1)
+                        Slider(value: $imageEnt.brightnessAdjust, in: 0...1).accentColor(.white)
                     }.padding(.horizontal, 30)
                     
                     HStack(spacing: 20){
                         Text("Blur")
-                            .foregroundColor(Color(.systemBlue))
+                            .foregroundColor(.white)
                         
-                        Slider(value: $imageEnt.blurIntensity, in: 0...10)
+                        Slider(value: $imageEnt.blurIntensity, in: 0...10).accentColor(.white)
                     }.padding(.horizontal, 30)
                     
                     HStack(spacing: 20){
                         Text("Saturation")
-                            .foregroundColor(Color(.systemBlue))
+                            .foregroundColor(.white)
                         
-                        Slider(value: $imageEnt.saturationAdjust, in: 0...1)
+                        Slider(value: $imageEnt.saturationAdjust, in: 0...1).accentColor(.white)
                     }.padding(.horizontal, 30)
                     
                     HStack(spacing: 20){
                         Text("Contrast")
-                            .foregroundColor(Color(.systemBlue))
+                            .foregroundColor(.white)
                         
-                        Slider(value: $imageEnt.contrastAdjust, in: 0...1)
+                        Slider(value: $imageEnt.contrastAdjust, in: 0...1).accentColor(.white)
                     }.padding(.horizontal, 30)
                     
                     HStack(spacing: 20){
                         Text("Opacity")
-                            .foregroundColor(Color(.systemBlue))
+                            .foregroundColor(.white)
                         
-                        Slider(value: $imageEnt.opacityAdjust, in: 0...1)
+                        Slider(value: $imageEnt.opacityAdjust, in: 0...1).accentColor(.white)
                     }.padding(.horizontal, 30)
                 }
                 .padding(.bottom,30)

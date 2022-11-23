@@ -18,7 +18,7 @@ struct ImagePainterView: View {
     
     @State private var showingAlert = false
     
-    @Binding var paintImage: UIImage
+    @Binding var paintedImage: UIImage
     
     private func rectReader2() -> some View {
         return GeometryReader { (geometry) -> Color in
@@ -40,8 +40,17 @@ struct ImagePainterView: View {
                             imageEnt.showPainter.toggle()
                         } label: {
                             Image(systemName: "xmark")
+                                .foregroundColor(.white)
                                 .font(.system(size: 20))
                         }
+                        
+                        
+                        Spacer()
+                        
+                        Text("Paint")
+                            .foregroundColor(.white)
+                            .bold()
+                            .padding(.leading, 50)
                         
                         Spacer()
                         
@@ -77,6 +86,7 @@ struct ImagePainterView: View {
                             }
                         } label: {
                             Image(systemName:"paintpalette")
+                                .foregroundColor(.white)
                                 .font(.system(size: 24))
                         }
                         .padding(.trailing, 10)
@@ -86,7 +96,7 @@ struct ImagePainterView: View {
                             
                             let renderer = ImageRenderer(content: imageWithPaintingView(imageEnt: imageEnt, lines: lines, pickedColor: pickedColor, imageSize: imageSize))
 
-                            paintImage = renderer.uiImage!
+                            paintedImage = renderer.uiImage!
                             
                             // Clear previous painting
                             lines.removeAll()
@@ -118,6 +128,7 @@ struct ImagePainterView: View {
                         for line in lines{
                             var path = Path()
                             path.addLines(line.points)
+                            // Show the path on the Canvas
                             context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
                         }
                     }
