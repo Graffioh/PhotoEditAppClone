@@ -39,9 +39,8 @@ struct ImagePainterView: View {
                         Button {
                             imageEnt.showPainter.toggle()
                         } label: {
-                            Image(systemName: "xmark")
+                            Text("Cancel")
                                 .foregroundColor(.white)
-                                .font(.system(size: 20))
                         }
                         
                         
@@ -50,7 +49,7 @@ struct ImagePainterView: View {
                         Text("Paint")
                             .foregroundColor(.white)
                             .bold()
-                            .padding(.leading, 50)
+                            .padding(.leading, 25)
                         
                         Spacer()
                         
@@ -102,8 +101,8 @@ struct ImagePainterView: View {
                             lines.removeAll()
                         } label: {
                             Text("Done")
-                                .foregroundColor(.yellow)
-                        }
+                                .foregroundColor(lines.isEmpty ? .gray : .yellow)
+                        }.disabled(lines.isEmpty ? true : false)
                     }
                     .padding()
                 

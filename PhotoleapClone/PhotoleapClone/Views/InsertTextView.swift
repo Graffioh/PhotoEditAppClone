@@ -33,9 +33,8 @@ struct InsertTextView: View {
                             Button {
                                 imageEnt.showInsertText.toggle()
                             } label: {
-                                Image(systemName: "xmark")
+                                Text("Cancel")
                                     .foregroundColor(.white)
-                                    .font(.system(size: 20))
                             }
                             
                             Spacer()
@@ -57,8 +56,8 @@ struct InsertTextView: View {
                                 textImage = renderer.uiImage!
                                 } label: {
                                     Text("Done")
-                                        .foregroundColor(.yellow)
-                                }
+                                        .foregroundColor(txt != "" ? .yellow : .gray)
+                                }.disabled(txt != "" ? false : true)
 //                                .alert("Sorry, not working :(", isPresented: $showingAlert) {
 //                                            Button("OK", role: .cancel) { imageEnt.showInsertText.toggle() }
 //                                        }

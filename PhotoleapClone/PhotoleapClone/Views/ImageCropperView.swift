@@ -41,9 +41,8 @@ struct ImageCropperView: View {
                             Button {
                                 imageEnt.showCropper.toggle()
                             } label: {
-                                Image(systemName: "xmark")
+                                Text("Cancel")
                                     .foregroundColor(.white)
-                                    .font(.system(size: 20))
                             }
                             
                             Spacer()
@@ -51,7 +50,6 @@ struct ImageCropperView: View {
                             Text("Crop")
                                 .foregroundColor(.white)
                                 .bold()
-                                .padding(.leading, 20)
                             
                             Spacer()
                             
