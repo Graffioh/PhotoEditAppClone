@@ -66,7 +66,6 @@ struct EditPhotoView: View {
                     .scaledToFit()
             }
             
-            
             Spacer()
             
             HStack{
@@ -223,7 +222,7 @@ private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage, textIm
     
 }
 
-// fix for camera-taken photos
+// Fix for camera-taken photos
 extension UIImage {
     func fixOrientation() -> UIImage {
         if self.imageOrientation == UIImage.Orientation.up {
@@ -234,11 +233,5 @@ extension UIImage {
         let normalizedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
     UIGraphicsEndImageContext()
     return normalizedImage;
-    }
-}
-
-struct EditPhotoView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditPhotoView()
     }
 }

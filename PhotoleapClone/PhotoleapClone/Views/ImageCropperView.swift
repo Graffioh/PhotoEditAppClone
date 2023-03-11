@@ -168,11 +168,3 @@ extension UIImageView {
     }
 }
 
-
-
-//struct ImageCropperView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ImageCropperView()
-//    }
-//}
-

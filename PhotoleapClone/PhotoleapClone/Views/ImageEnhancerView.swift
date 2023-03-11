@@ -36,17 +36,6 @@ struct ImageEnhancerView: View {
                         
                         Spacer()
                         
-                        // Checking if the image is modified
-//                        if  imageEnt.blurIntensity != 0 ||
-//                            imageEnt.contrastAdjust != 1 ||
-//                            imageEnt.opacityAdjust != 1 ||
-//                            imageEnt.brightnessAdjust != 0 ||
-//                                imageEnt.saturationAdjust != 1 {
-//                            isImageModified = true
-//                        }else{
-//                            isImageModified = false
-//                        }
-                        
                         Button {
                             imageEnt.showEnhancer.toggle()
                             
@@ -139,9 +128,3 @@ private func imageWithEnhancements(imageEnt: ImageModel) -> some View {
         .saturation(imageEnt.saturationAdjust)
         .blur(radius: imageEnt.blurIntensity)
 }
-
-//struct ImageEnhancerView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ImageEnhancerView(img: img)
-//    }
-//}

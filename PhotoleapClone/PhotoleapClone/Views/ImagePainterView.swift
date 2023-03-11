@@ -211,9 +211,3 @@ extension UIImageView {
         return CGRect(x: x, y: y, width: size.width, height: size.height)
     }
 }
-
-//struct ImagePainterView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ImagePainterView()
-//    }
-//}

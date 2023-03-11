@@ -48,7 +48,6 @@ struct InsertTextView: View {
                             Spacer()
     
                             Button {
-//                                showingAlert.toggle()
                                 imageEnt.showInsertText.toggle()
     
                                 let renderer = ImageRenderer(content: textView(imageEnt: imageEnt, txt: txt, txtPos: txtPos, imageSize: imageSize))
@@ -58,9 +57,6 @@ struct InsertTextView: View {
                                     Text("Done")
                                         .foregroundColor(txt != "" ? .yellow : .gray)
                                 }.disabled(txt != "" ? false : true)
-//                                .alert("Sorry, not working :(", isPresented: $showingAlert) {
-//                                            Button("OK", role: .cancel) { imageEnt.showInsertText.toggle() }
-//                                        }
                         }
                         .padding()
     
@@ -100,31 +96,11 @@ struct InsertTextView: View {
 
 
 private func textView(imageEnt: ImageModel, txt: String, txtPos: CGPoint, imageSize: CGSize) -> some View {
-    
-//        ZStack{
-//            Image(uiImage: imageEnt.imageUI!)
-//                .resizable()
-//                .scaledToFit()
-//                .padding()
-//                .opacity(imageEnt.opacityAdjust)
-//                .brightness(imageEnt.brightnessAdjust)
-//                .contrast(imageEnt.contrastAdjust)
-//                .saturation(imageEnt.saturationAdjust)
-//                .blur(radius: imageEnt.blurIntensity)
             
-            Text("\(txt)")
-                .font(.system(size: 32))
-                //.position(txtPos)
-                .foregroundColor(.red)
-                .frame(width: imageSize.width, height: imageSize.height - 30)
-    
-        // METtERE TEStoksmwasopmxsapokap
-        //}
-    
-}
+    Text("\(txt)")
+        .font(.system(size: 32))
+        //.position(txtPos)
+        .foregroundColor(.red)
+        .frame(width: imageSize.width, height: imageSize.height - 30)
 
-//struct InsertTextView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        InsertTextView()
-//    }
-//}
+}

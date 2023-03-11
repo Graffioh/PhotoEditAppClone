@@ -68,6 +68,7 @@
 				064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */,
 				06743C792923D36C000C06D1 /* ViewModels */,
 				06743C782923D367000C06D1 /* Models */,
+				067592A52924270100AAFBFE /* Utils */,
 				06743C772923D363000C06D1 /* Views */,
 				064F5BBC2923D24800C9932F /* Assets.xcassets */,
 				064F5BBE2923D24800C9932F /* Preview Content */,
@@ -99,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				067592A92924E4AA00AAFBFE /* ImageModel.swift */,
-				067592A52924270100AAFBFE /* Utils */,
 			);
 			path = Models;
 			sourceTree = "<group>";
