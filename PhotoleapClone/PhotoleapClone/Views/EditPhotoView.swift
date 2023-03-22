@@ -26,7 +26,7 @@ struct EditPhotoView: View {
     @StateObject var imgSaver = ImageSaver()
     
     @State var showBrowseImages = false
-
+    
     // func to update the image based on the one picked in the gallery
     private func updateImg(){
         if let selectedImageData,
@@ -42,163 +42,163 @@ struct EditPhotoView: View {
     }
     
     var body: some View {
-            
-    NavigationView {
-        VStack{
-            
-            Spacer()
-            
-            ZStack{
-                if let image = imageEnt.imageUI {
-                    Image(uiImage: image)
+        
+        NavigationView {
+            VStack{
+                
+                Spacer()
+                
+                ZStack{
+                    if let image = imageEnt.imageUI {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .padding()
+                            .opacity(imageEnt.opacityAdjust)
+                            .brightness(imageEnt.brightnessAdjust)
+                            .contrast(imageEnt.contrastAdjust)
+                            .saturation(imageEnt.saturationAdjust)
+                            .blur(radius: imageEnt.blurIntensity)
+                    }
+                    
+                    Image(uiImage: textImage)
                         .resizable()
                         .scaledToFit()
-                        .padding()
-                        .opacity(imageEnt.opacityAdjust)
-                        .brightness(imageEnt.brightnessAdjust)
-                        .contrast(imageEnt.contrastAdjust)
-                        .saturation(imageEnt.saturationAdjust)
-                        .blur(radius: imageEnt.blurIntensity)
+                    
+                    Image(uiImage: paintedImage)
+                        .resizable()
+                        .scaledToFit()
                 }
                 
-                Image(uiImage: textImage)
-                    .resizable()
-                    .scaledToFit()
+                Spacer()
                 
-                Image(uiImage: paintedImage)
-                    .resizable()
-                    .scaledToFit()
-            }
-            
-            Spacer()
-            
-            HStack{
-                // Image cropper tool
-                Button {
-                    imageEnt.showCropper.toggle()
-                } label: {
-                    Image(systemName: "crop")
-                        .foregroundColor(.white)
-                        .padding(8)
-                        .font(.system(size:26))
-                }
-                .fullScreenCover(isPresented: $imageEnt.showCropper) {
+                HStack{
+                    // Image cropper tool
+                    Button {
+                        imageEnt.showCropper.toggle()
+                    } label: {
+                        Image(systemName: "crop")
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .font(.system(size:26))
+                    }
+                    .fullScreenCover(isPresented: $imageEnt.showCropper) {
                         ImageCropperView(imageEnt: imageEnt)
-                }
-                
-                // Image enhancer tool
-                Button {
-                    imageEnt.showEnhancer.toggle()
-                } label: {
-                    Image(systemName: "slider.horizontal.3")
-                        .foregroundColor(.white)
-                        .padding(8)
-                        .font(.system(size:26))
-                }
-                .fullScreenCover(isPresented: $imageEnt.showEnhancer) {
-                    ImageEnhancerView(imageEnt: imageEnt)
-                }
-                
-                // Paint tool
-                Button {
-                    imageEnt.showPainter.toggle()
-                } label: {
-                    Image(systemName: "paintbrush.pointed")
-                        .foregroundColor(.white)
-                        .padding(8)
-                        .font(.system(size:26))
-                }
-                .fullScreenCover(isPresented: $imageEnt.showPainter) {
-                    ImagePainterView(imageEnt: imageEnt, paintedImage: $paintedImage)
-                }
-                
-                // Add text tool
-                Button {
-                    imageEnt.showInsertText.toggle()
-                } label: {
-                    Image(systemName: "character")
-                        .foregroundColor(.white)
-                        .padding(8)
-                        .font(.system(size:26))
-                }
-                .fullScreenCover(isPresented: $imageEnt.showInsertText) {
-                    InsertTextView(imageEnt: imageEnt, textImage: $textImage)
-                }
-                
-                // Browse online images
-                Button {
-                    showBrowseImages.toggle()
-                } label: {
-                    Image(systemName: "globe")
-                        .foregroundColor(.white)
-                        .padding(8)
-                        .font(.system(size:26))
-                }
-                .fullScreenCover(isPresented: $showBrowseImages) {
-                   BrowseImagesView(showBrowseImages: $showBrowseImages)
-                }
-                
-            }.padding(.bottom, 10)
-        }
-        .navigationTitle("PhotoEditClone")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
-                    Image(systemName: "photo")
-                        .foregroundColor(.white)
-                }
-                .onChange(of: selectedItem) { newItem in
-                    Task {
-                        
-                        if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                            selectedImageData = data
+                    }
+                    
+                    // Image enhancer tool
+                    Button {
+                        imageEnt.showEnhancer.toggle()
+                    } label: {
+                        Image(systemName: "slider.horizontal.3")
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .font(.system(size:26))
+                    }
+                    .fullScreenCover(isPresented: $imageEnt.showEnhancer) {
+                        ImageEnhancerView(imageEnt: imageEnt)
+                    }
+                    
+                    // Paint tool
+                    Button {
+                        imageEnt.showPainter.toggle()
+                    } label: {
+                        Image(systemName: "paintbrush.pointed")
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .font(.system(size:26))
+                    }
+                    .fullScreenCover(isPresented: $imageEnt.showPainter) {
+                        ImagePainterView(imageEnt: imageEnt, paintedImage: $paintedImage)
+                    }
+                    
+                    // Add text tool
+                    Button {
+                        imageEnt.showInsertText.toggle()
+                    } label: {
+                        Image(systemName: "character")
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .font(.system(size:26))
+                    }
+                    .fullScreenCover(isPresented: $imageEnt.showInsertText) {
+                        InsertTextView(imageEnt: imageEnt, textImage: $textImage)
+                    }
+                    
+                    // Browse online images
+                    Button {
+                        showBrowseImages.toggle()
+                    } label: {
+                        Image(systemName: "globe")
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .font(.system(size:26))
+                    }
+                    .fullScreenCover(isPresented: $showBrowseImages) {
+                        BrowseImagesView(imageEnt: imageEnt, showBrowseImages: $showBrowseImages)
+                    }
+                    
+                }.padding(.bottom, 10)
+            }
+            .navigationTitle("PhotoEditClone")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
+                        Image(systemName: "photo")
+                            .foregroundColor(.white)
+                    }
+                    .onChange(of: selectedItem) { newItem in
+                        Task {
+                            
+                            if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                selectedImageData = data
+                            }
+                            
+                            updateImg()
                         }
-                        
-                        updateImg()
                     }
                 }
-            }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    
-                    showingAlert.toggle()
-                    
-                    let renderer = ImageRenderer(content: imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage))
-
-                    composedImage = renderer.uiImage!
-                    
-                    imgSaver.writeToPhotoAlbum(image: composedImage) // This mf save the image with a white border I don't know why
-                    
-                    // Clear text
-                    textImage = UIImage() // Keep or remove?
-                    // Clear painting
-                    paintedImage = UIImage() // Keep or remove?
-                    
-                } label: {
-                    Text("Save")
-                        .foregroundColor(.yellow)
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        
+                        showingAlert.toggle()
+                        
+                        let renderer = ImageRenderer(content: imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage))
+                        
+                        composedImage = renderer.uiImage!
+                        
+                        imgSaver.writeToPhotoAlbum(image: composedImage) // This mf save the image with a white border I don't know why
+                        
+                        // Clear text
+                        textImage = UIImage() // Keep or remove?
+                        // Clear painting
+                        paintedImage = UIImage() // Keep or remove?
+                        
+                    } label: {
+                        Text("Save")
+                            .foregroundColor(.yellow)
+                    }
+                    .alert("Image saved.", isPresented: $showingAlert) {
+                        Button("OK", role: .cancel) { showingAlert.toggle() }
+                    }
                 }
-                .alert("Image saved.", isPresented: $showingAlert) {
-                            Button("OK", role: .cancel) { showingAlert.toggle() }
-                        }
-            }
-            
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button { } label: {
-                Image(systemName: "arrow.turn.up.left")
-                    .font(.system(size:20))
-                    .foregroundColor(.gray)
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button { } label: {
+                        Image(systemName: "arrow.turn.up.left")
+                            .font(.system(size:20))
+                            .foregroundColor(.gray)
+                    }
                 }
-            }
-            
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button { } label: {
-                Image(systemName: "arrow.turn.up.right")
-                    .font(.system(size:20))
-                    .foregroundColor(.gray)
-                }
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button { } label: {
+                        Image(systemName: "arrow.turn.up.right")
+                            .font(.system(size:20))
+                            .foregroundColor(.gray)
+                    }
                 }
             }
         }
@@ -236,12 +236,12 @@ private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage, textIm
 extension UIImage {
     func fixOrientation() -> UIImage {
         if self.imageOrientation == UIImage.Orientation.up {
-    return self
-    }
-    UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+            return self
+        }
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         self.draw(in: CGRectMake(0, 0, self.size.width, self.size.height))
         let normalizedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-    UIGraphicsEndImageContext()
-    return normalizedImage;
+        UIGraphicsEndImageContext()
+        return normalizedImage;
     }
 }
