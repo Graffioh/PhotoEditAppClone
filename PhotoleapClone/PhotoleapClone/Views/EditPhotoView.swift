@@ -22,6 +22,10 @@ struct EditPhotoView: View {
     
     // Final image that is going to be saved
     @State private var composedImage: UIImage = UIImage()
+    
+    @StateObject var imgSaver = ImageSaver()
+    
+    @State var showBrowseImages = false
 
     // func to update the image based on the one picked in the gallery
     private func updateImg(){
@@ -108,11 +112,6 @@ struct EditPhotoView: View {
                     ImagePainterView(imageEnt: imageEnt, paintedImage: $paintedImage)
                 }
                 
-                Image(systemName: "wand.and.stars")
-                    .foregroundColor(.gray)
-                    .padding(8)
-                    .font(.system(size:26))
-                
                 // Add text tool
                 Button {
                     imageEnt.showInsertText.toggle()
@@ -124,6 +123,19 @@ struct EditPhotoView: View {
                 }
                 .fullScreenCover(isPresented: $imageEnt.showInsertText) {
                     InsertTextView(imageEnt: imageEnt, textImage: $textImage)
+                }
+                
+                // Browse online images
+                Button {
+                    showBrowseImages.toggle()
+                } label: {
+                    Image(systemName: "globe")
+                        .foregroundColor(.white)
+                        .padding(8)
+                        .font(.system(size:26))
+                }
+                .fullScreenCover(isPresented: $showBrowseImages) {
+                   BrowseImagesView(showBrowseImages: $showBrowseImages)
                 }
                 
             }.padding(.bottom, 10)
@@ -157,9 +169,7 @@ struct EditPhotoView: View {
 
                     composedImage = renderer.uiImage!
                     
-                    let imageSaver = ImageSaver()
-                    
-                    imageSaver.writeToPhotoAlbum(image: composedImage) // This mf save the image with a white border I don't know why
+                    imgSaver.writeToPhotoAlbum(image: composedImage) // This mf save the image with a white border I don't know why
                     
                     // Clear text
                     textImage = UIImage() // Keep or remove?

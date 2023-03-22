@@ -4,7 +4,7 @@ import SwiftUI
 import PhotosUI
 
 
-class ImageSaver: NSObject {
+class ImageSaver: NSObject, ObservableObject {
     func writeToPhotoAlbum(image: UIImage) {
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveCompleted), nil)
     }

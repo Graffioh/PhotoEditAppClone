@@ -1,9 +1,8 @@
-
 import Foundation
 import SwiftUI
 import CoreGraphics
 
-class ImageCropper {
+class ImageCropper: ObservableObject {
     
 //    func rectReader() -> some View {
 //        return GeometryReader { (geometry) -> Color in

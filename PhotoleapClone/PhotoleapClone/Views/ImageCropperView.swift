@@ -3,9 +3,6 @@ import SwiftUI
 import CoreGraphics
 
 struct ImageCropperView: View {
-    
-    let cropper = ImageCropper()
-    
     @ObservedObject var imageEnt: ImageModel
     
     @State var imageSize: CGSize = .zero
@@ -18,6 +15,8 @@ struct ImageCropperView: View {
     @State var centerRecLocation: CGPoint = CGPoint(x: 210, y: 420)
     
     @State var recSize: CGSize = CGSize(width: 100, height: 100)
+    
+    @StateObject var imgCropper = ImageCropper()
     
     private func rectReader() -> some View {
         return GeometryReader { (geometry) -> Color in
@@ -58,7 +57,7 @@ struct ImageCropperView: View {
                                 originX = (centerRecLocation.x - (proxy.size.width - imageSize.width) / 2) - (recSize.width / 2)
                                 originY = (centerRecLocation.y - (proxy.size.height - imageSize.height) / 2) - (recSize.height / 2)
                                 
-                                imageEnt.imageUI = cropper.cropImage(imageEnt.imageUI!, toRect: CGRect(origin: CGPoint(x: originX, y: originY), size: CGSize(width: recSize.width, height: recSize.height)), viewWidth: proxy.size.width, viewHeight: proxy.size.height)
+                                imageEnt.imageUI = imgCropper.cropImage(imageEnt.imageUI!, toRect: CGRect(origin: CGPoint(x: originX, y: originY), size: CGSize(width: recSize.width, height: recSize.height)), viewWidth: proxy.size.width, viewHeight: proxy.size.height)
                                 
                                     imageEnt.showCropper.toggle()
                             } label: {
@@ -100,8 +99,8 @@ struct ImageCropperView: View {
                                             .onChanged{ state in
                                                 centerRecLocation = state.location
                                                 
-                                                if(cropper.checkIfOutOfBounds(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size, recSize: recSize)){
-                                                    centerRecLocation = cropper.recPosInsideTheImage(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size, recSize: recSize)
+                                                if(imgCropper.checkIfOutOfBounds(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size, recSize: recSize)){
+                                                    centerRecLocation = imgCropper.recPosInsideTheImage(recPos: centerRecLocation, imageSize: imageSize, screenSize: proxy.size, recSize: recSize)
                                                 }
                                                 
                                                 // DEBUG
@@ -119,9 +118,9 @@ struct ImageCropperView: View {
                                             }
                                     )
                                 
+                        // Circle to resize the rectangle
                         let circlePosition: CGPoint = CGPoint(x: centerRecLocation.x + (recSize.width / 2), y: centerRecLocation.y + (recSize.height / 2))
-
-
+                                
                                 Circle()
                                     .frame(width: 30, height: 30)
                                     .foregroundColor(.red)
