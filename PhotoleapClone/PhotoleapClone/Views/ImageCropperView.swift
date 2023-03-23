@@ -29,7 +29,7 @@ struct ImageCropperView: View {
     }
     
     var body: some View {
-        GeometryReader { proxy in            
+        GeometryReader { proxy in
             NavigationStack{
                 ZStack{
                     Color(red:18 / 255, green:18 / 255, blue:18 / 255)
@@ -59,7 +59,7 @@ struct ImageCropperView: View {
                                 
                                 imageEnt.imageUI = imgCropper.cropImage(imageEnt.imageUI!, toRect: CGRect(origin: CGPoint(x: originX, y: originY), size: CGSize(width: recSize.width, height: recSize.height)), viewWidth: proxy.size.width, viewHeight: proxy.size.height)
                                 
-                                    imageEnt.showCropper.toggle()
+                                imageEnt.showCropper.toggle()
                             } label: {
                                 Text("Done")
                                     .foregroundColor(.yellow)
@@ -71,20 +71,20 @@ struct ImageCropperView: View {
                         Spacer()
                         ZStack{
                             if let image = imageEnt.imageUI{
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .padding()
-                                        .opacity(imageEnt.opacityAdjust)
-                                        .brightness(imageEnt.brightnessAdjust)
-                                        .contrast(imageEnt.contrastAdjust)
-                                        .saturation(imageEnt.saturationAdjust)
-                                        .blur(radius: imageEnt.blurIntensity)
-                                        .background(rectReader())
-                                        .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
-//                                        .onTapGesture { // DEBUG
-//                                            print("x screen size: \(proxy.size.width) | y screen size: \(proxy.size.height) | x distance: \((proxy.size.width - imageSize.width) / 2)  | y distance: \((proxy.size.height - imageSize.height) / 2) | x image size: \(imageSize.width) | y image size: \(imageSize.height)")
-//                                }
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding()
+                                    .opacity(imageEnt.opacityAdjust)
+                                    .brightness(imageEnt.brightnessAdjust)
+                                    .contrast(imageEnt.contrastAdjust)
+                                    .saturation(imageEnt.saturationAdjust)
+                                    .blur(radius: imageEnt.blurIntensity)
+                                    .background(rectReader())
+                                    .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
+                                //                                        .onTapGesture { // DEBUG
+                                //                                            print("x screen size: \(proxy.size.width) | y screen size: \(proxy.size.height) | x distance: \((proxy.size.width - imageSize.width) / 2)  | y distance: \((proxy.size.height - imageSize.height) / 2) | x image size: \(imageSize.width) | y image size: \(imageSize.height)")
+                                //                                }
                             }
                             
                             ZStack{
@@ -104,33 +104,33 @@ struct ImageCropperView: View {
                                                 }
                                                 
                                                 // DEBUG
-//                                                print("x CENTER rec: \(centerRecLocation.x) & y  CENTER rec: \(centerRecLocation.y + 81)")
-
-//                                                print("BOT image: \(((proxy.size.height + 81) - imageSize.height) / 2 + imageSize.height)")
-//
-//                                                print("TOP image: \(((proxy.size.height + 81) - imageSize.height) / 2)")
-//
-//                                                print("y CENTER rec: \(centerRecLocation.y + 81)")
+                                                //                                                print("x CENTER rec: \(centerRecLocation.x) & y  CENTER rec: \(centerRecLocation.y + 81)")
+                                                
+                                                //                                                print("BOT image: \(((proxy.size.height + 81) - imageSize.height) / 2 + imageSize.height)")
+                                                //
+                                                //                                                print("TOP image: \(((proxy.size.height + 81) - imageSize.height) / 2)")
+                                                //
+                                                //                                                print("y CENTER rec: \(centerRecLocation.y + 81)")
                                             }
                                             .updating( $locationState
-                                            ){ currentState, pastLocation, transaction in
-                                                pastLocation = currentState.location
-                                            }
+                                                     ){ currentState, pastLocation, transaction in
+                                                         pastLocation = currentState.location
+                                                     }
                                     )
                                 
-                        // Circle to resize the rectangle
-                        let circlePosition: CGPoint = CGPoint(x: centerRecLocation.x + (recSize.width / 2), y: centerRecLocation.y + (recSize.height / 2))
+                                // Circle to resize the rectangle
+                                let circlePosition: CGPoint = CGPoint(x: centerRecLocation.x + (recSize.width / 2), y: centerRecLocation.y + (recSize.height / 2))
                                 
                                 Circle()
                                     .frame(width: 30, height: 30)
                                     .foregroundColor(.red)
                                     .opacity(0.5)
                                     .position(circlePosition)
-                                .gesture(
-                                    DragGesture()
-                                        .onChanged{ value in
-                                            recSize.height = min(max(100, (value.translation.height + recSize.height)), imageSize.height - 30)
-                                            recSize.width = min(max(100, (value.translation.width + recSize.width)), imageSize.width - 30)
+                                    .gesture(
+                                        DragGesture()
+                                            .onChanged{ value in
+                                                recSize.height = min(max(100, (value.translation.height + recSize.height)), imageSize.height - 30)
+                                                recSize.width = min(max(100, (value.translation.width + recSize.width)), imageSize.width - 30)
                                             }
                                     )
                             }
@@ -151,18 +151,18 @@ extension UIImageView {
         guard let image = image else { return bounds }
         guard contentMode == .scaleAspectFit else { return bounds }
         guard image.size.width > 0 && image.size.height > 0 else { return bounds }
-
+        
         let scale: CGFloat
         if image.size.width > image.size.height {
             scale = bounds.width / image.size.width
         } else {
             scale = bounds.height / image.size.height
         }
-
+        
         let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
         let x = (bounds.width - size.width) / 2.0
         let y = (bounds.height - size.height) / 2.0
-
+        
         return CGRect(x: x, y: y, width: size.width, height: size.height)
     }
 }

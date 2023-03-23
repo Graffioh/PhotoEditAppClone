@@ -3,9 +3,9 @@ import Foundation
 class NetworkManager : ObservableObject{
     let token: String = "nhYhY8Lqmyt0GSsFODrwQKI4ZI3e8OBUcq50x8myJUd6d4NKRRyKghdW"
     
-    // GET All photos
-    func fetchPexelsImages() async throws -> BrowsedImageResponse {
-        guard let url = URL(string: "https://api.pexels.com/v1/curated?per_page=10") else {
+    // GET All curated photos
+    func fetchPexelsImages(pageNumber: String) async throws -> BrowsedImageResponse {
+        guard let url = URL(string: "https://api.pexels.com/v1/curated?page=\(pageNumber)&per_page=10") else {
              print("Invalid url...")
              return BrowsedImageResponse(page: 0, per_page: 0, photos: [])
          }
