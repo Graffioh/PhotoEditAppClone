@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-class ImageUrlConverter: ObservableObject {
+class ImageConverter: ObservableObject {
     func convertUrlIntoImages(browsedImages: [BrowsedImageModel]) async throws -> [UIImage] {
         var images: [UIImage] = []
         
@@ -14,7 +14,6 @@ class ImageUrlConverter: ObservableObject {
 
             if let image = UIImage(data: data) {
                 images.append(image)
-                print("hello")
             }
 
         }
@@ -25,8 +24,6 @@ class ImageUrlConverter: ObservableObject {
     func convertUrlIntoSingleImage(imgUrl: String) async throws -> UIImage {
         var image: UIImage = UIImage()
         
-        //let data = try! Data(contentsOf: URL(string: imgUrl)!)
-        
         let (data, _) = try await URLSession.shared.data(from: URL(string: imgUrl)!)
 
         if let uiimage = UIImage(data: data) {
@@ -34,5 +31,17 @@ class ImageUrlConverter: ObservableObject {
         }
 
         return image
+    }
+    
+    func convertImgToJpg(image: UIImage) -> UIImage {
+        var convertedImage: UIImage = UIImage()
+        
+        if let data = image.jpegData(compressionQuality: 0.8) {
+            if let uiimage = UIImage(data: data) {
+                convertedImage = uiimage
+            }
+        }
+        
+        return convertedImage
     }
 }

@@ -57,31 +57,31 @@ struct ImagePainterView: View {
                             Button {
                                 pickedColor = .red
                             } label: {
-                                Text("Red")
+                                Text("Red 🔴")
                             }
                             
                             Button {
                                 pickedColor = .green
                             } label: {
-                                Text("Green")
+                                Text("Green 🟢")
                             }
 
                             Button {
                                 pickedColor = .blue
                             } label: {
-                                Text("Blue")
+                                Text("Blue 🔵")
                             }
                             
                             Button {
                                 pickedColor = .black
                             } label: {
-                                Text("Black")
+                                Text("Black ⚫️")
                             }
                             
                             Button {
                                 pickedColor = .white
                             } label: {
-                                Text("White")
+                                Text("White ⚪️")
                             }
                         } label: {
                             Image(systemName:"paintpalette")

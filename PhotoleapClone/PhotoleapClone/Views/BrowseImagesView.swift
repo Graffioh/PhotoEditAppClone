@@ -6,9 +6,9 @@ struct BrowseImagesView: View {
     @Binding var showBrowseImages: Bool
     
     @State var fetchedImages: [BrowsedImageModel] = []
-    @State var fetchedUIImages: [UIImage] = []
+    @State var convertedImages: [UIImage] = []
     
-    @StateObject var imageUrlConverter: ImageUrlConverter = ImageUrlConverter()
+    @StateObject var imageConverter: ImageConverter = ImageConverter()
     
     var body: some View {
         VStack {
@@ -35,7 +35,7 @@ struct BrowseImagesView: View {
                     showBrowseImages.toggle()
                     
                     Task {
-                        imageEnt.imageUI = try await imageUrlConverter.convertUrlIntoSingleImage(imgUrl: img.src.medium)
+                        imageEnt.imageUI = try await imageConverter.convertUrlIntoSingleImage(imgUrl: img.src.medium)
                     }
                 } label: {
                     AsyncImage(url: URL(string: img.src.medium)) { asyncimg in
@@ -53,8 +53,7 @@ struct BrowseImagesView: View {
                 do {
                     self.fetchedImages = try await NetworkManager().fetchPexelsImages().photos
                     
-                    self.fetchedUIImages = try await imageUrlConverter.convertUrlIntoImages(browsedImages: fetchedImages)
-                    
+                    self.convertedImages = try await imageConverter.convertUrlIntoImages(browsedImages: fetchedImages)
                 } catch {
                     print(error)
                 }

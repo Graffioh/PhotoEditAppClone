@@ -6,6 +6,8 @@ import PhotosUI
 
 class ImageSaver: NSObject, ObservableObject {
     func writeToPhotoAlbum(image: UIImage) {
+        //ImageConverter().convertImgToJpg(image: image)
+        
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveCompleted), nil)
     }
 
