@@ -27,6 +27,18 @@ struct EditPhotoView: View {
     
     @State var showBrowseImages = false
     
+    @State var imageSize: CGSize = .zero
+    
+    private func rectReader() -> some View {
+        return GeometryReader { (geometry) -> Color in
+            let imageSize = geometry.size
+            DispatchQueue.main.async {
+                self.imageSize = imageSize
+            }
+            return .clear
+        }
+    }
+    
     // func to update the image based on the one picked in the gallery
     private func updateImg(){
         if let selectedImageData,
@@ -40,6 +52,7 @@ struct EditPhotoView: View {
             imageEnt.saturationAdjust = 1
         }
     }
+    
     
     var body: some View {
         
@@ -162,19 +175,21 @@ struct EditPhotoView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        
                         showingAlert.toggle()
                         
-                        let renderer = ImageRenderer(content: imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage))
+                        let renderer = ImageRenderer(content: imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage, imageSize: imageSize))
                         
                         composedImage = renderer.uiImage!
                         
-                        imgSaver.writeToPhotoAlbum(image: composedImage) // This mf save the image with a white border I don't know why
+                        imgSaver.writeToPhotoAlbum(image: composedImage) // This mf save the image with a white border I don't know why (Fixed)
                         
                         // Clear text
                         textImage = UIImage() // Keep or remove?
                         // Clear painting
                         paintedImage = UIImage() // Keep or remove?
+                        
+                        //DEBUG
+                        print("width: \(imageEnt.imageUI!.size.width) - height: \(imageEnt.imageUI!.size.height)")
                         
                     } label: {
                         Text("Save")
@@ -206,14 +221,11 @@ struct EditPhotoView: View {
 }
 
 
-private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage, textImage: UIImage) -> some View {
+private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage, textImage: UIImage, imageSize: CGSize) -> some View {
     
     ZStack{
         if let image = imageEnt.imageUI {
             Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .padding()
                 .opacity(imageEnt.opacityAdjust)
                 .brightness(imageEnt.brightnessAdjust)
                 .contrast(imageEnt.contrastAdjust)

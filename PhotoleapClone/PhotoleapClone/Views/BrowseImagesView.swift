@@ -24,8 +24,7 @@ struct BrowseImagesView: View {
                 
                 Spacer()
                 
-                
-                Text("Browse images")
+                Text("Browse")
                     .foregroundColor(.white)
                     .bold()
                 
