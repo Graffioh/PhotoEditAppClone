@@ -12,6 +12,10 @@ struct BrowseImagesView: View {
     
     @State var pageNumberCount: Int = 1
     
+    @State var searchText: String = ""
+    
+    @State var isSearched: Bool = false
+    
     var body: some View {
         VStack {
             HStack {
@@ -37,14 +41,18 @@ struct BrowseImagesView: View {
                     
                     Task {
                         do {
-                            self.fetchedImages = try await NetworkManager().fetchPexelsImages(pageNumber: String(pageNumberCount)).photos
+                            if !isSearched {
+                                self.fetchedImages = try await NetworkManager().fetchCuratedImages(pageNumber: String(pageNumberCount)).photos
+                            } else {
+                                self.fetchedImages = try await NetworkManager().fetchSearchedImages(pageNumber: String(pageNumberCount), searchString: searchText).photos
+                            }
                         } catch {
                             print(error)
                         }
                     }
                 } label: {
                     Image(systemName: "arrow.left")
-                        .font(.system(size:20))
+                        .font(.system(size:16))
                         .foregroundColor(pageNumberCount < 2 ? .gray : .yellow)
                 }.disabled(pageNumberCount < 2 ? true : false)
                 
@@ -53,14 +61,18 @@ struct BrowseImagesView: View {
                     
                     Task {
                         do {
-                            self.fetchedImages = try await NetworkManager().fetchPexelsImages(pageNumber: String(pageNumberCount)).photos
+                            if !isSearched {
+                                self.fetchedImages = try await NetworkManager().fetchCuratedImages(pageNumber: String(pageNumberCount)).photos
+                            } else {
+                                self.fetchedImages = try await NetworkManager().fetchSearchedImages(pageNumber: String(pageNumberCount), searchString: searchText).photos
+                            }
                         } catch {
                             print(error)
                         }
                     }
                 } label: {
                     Image(systemName: "arrow.right")
-                        .font(.system(size:20))
+                        .font(.system(size:16))
                         .foregroundColor(.yellow)
                 }
             
@@ -69,6 +81,32 @@ struct BrowseImagesView: View {
         Spacer()
         
             Text("Photos provided by Pexels")
+            
+        Spacer()
+            
+            HStack {
+                TextField("Search", text: $searchText)
+                    .padding()
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .cornerRadius(16)
+                
+                Button {
+                    isSearched = true
+                    
+                    Task {
+                        do {
+                            self.fetchedImages = try await NetworkManager().fetchSearchedImages(pageNumber: String(pageNumberCount), searchString: searchText).photos
+                        } catch {
+                            print(error)
+                        }
+                    }
+                } label: {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.white)
+                        .font(.system(size: 18))
+                        .padding(.trailing, 20)
+                }
+            }
             
         List(self.fetchedImages, id: \.self) { img in
             Button {
@@ -94,7 +132,7 @@ struct BrowseImagesView: View {
         
         Task {
             do {
-                self.fetchedImages = try await NetworkManager().fetchPexelsImages(pageNumber: "1").photos
+                self.fetchedImages = try await NetworkManager().fetchCuratedImages(pageNumber: "1").photos
                 
                 //self.convertedImages = try await imageConverter.convertUrlIntoImages(browsedImages: fetchedImages)
             } catch {

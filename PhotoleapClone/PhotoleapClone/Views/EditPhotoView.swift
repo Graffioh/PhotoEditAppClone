@@ -5,7 +5,7 @@ import PhotosUI
 struct EditPhotoView: View {
     
     // PhotoPicker vars
-    @State private var selectedItem: PhotosPickerItem? = nil
+    @State private var selectedPhotoFromGallery: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
     
     // Image entity
@@ -29,6 +29,10 @@ struct EditPhotoView: View {
     // Toggle to browse images
     @State var showBrowseImages = false
     
+    @State var showOptionsForPickingImages = false
+    
+    @State var showPhotoPicker = false
+    
     // func to update the image based on the one picked in the gallery
     private func updateImg(){
         if let selectedImageData,
@@ -42,7 +46,6 @@ struct EditPhotoView: View {
             imageEnt.saturationAdjust = 1
         }
     }
-    
     
     var body: some View {
         NavigationView {
@@ -126,20 +129,6 @@ struct EditPhotoView: View {
                     .fullScreenCover(isPresented: $imageEnt.showInsertText) {
                         InsertTextView(imageEnt: imageEnt, textImage: $textImage)
                     }
-                    
-                    // Browse online images
-                    Button {
-                        showBrowseImages.toggle()
-                    } label: {
-                        Image(systemName: "globe")
-                            .foregroundColor(.white)
-                            .padding(8)
-                            .font(.system(size:26))
-                    }
-                    .fullScreenCover(isPresented: $showBrowseImages) {
-                        BrowseImagesView(imageEnt: imageEnt, showBrowseImages: $showBrowseImages)
-                    }
-                    
                 }.padding(.bottom, 10)
             }
             .navigationTitle("PhotoEditClone")
@@ -147,14 +136,30 @@ struct EditPhotoView: View {
             .toolbar {
                 // Gallery
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
+                    Button {
+                        showOptionsForPickingImages.toggle()
+                    } label: {
                         Image(systemName: "photo")
                             .foregroundColor(.white)
+                    }.confirmationDialog("Select an option", isPresented: $showOptionsForPickingImages, titleVisibility: .visible) {
+                        // Open gallery selection
+                        Button("Gallery"){
+                            showPhotoPicker = true
+                        }
+                        
+                        // Open browse images online
+                        Button("Web"){
+                            showBrowseImages = true
+                        }
                     }
-                    .onChange(of: selectedItem) { newItem in
+                    .sheet(isPresented: $showBrowseImages) {
+                        BrowseImagesView(imageEnt: imageEnt, showBrowseImages: $showBrowseImages)
+                    }
+                    .photosPicker(isPresented: $showPhotoPicker, selection: $selectedPhotoFromGallery)
+                    .onChange(of: selectedPhotoFromGallery) { newPhoto in
+                        // Async operation used to select a new image from gallery
                         Task {
-                            
-                            if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                            if let data = try? await newPhoto?.loadTransferable(type: Data.self) {
                                 selectedImageData = data
                             }
                             
@@ -180,7 +185,7 @@ struct EditPhotoView: View {
                         paintedImage = UIImage() // Keep or remove?
                         
                         //DEBUG
-                        print("width: \(imageEnt.imageUI!.size.width) - height: \(imageEnt.imageUI!.size.height)")
+                        //print("width: \(imageEnt.imageUI!.size.width) - height: \(imageEnt.imageUI!.size.height)")
                         
                     } label: {
                         Text("Save")
@@ -191,21 +196,23 @@ struct EditPhotoView: View {
                     }
                 }
                 
-                // Change page (previous)
+                
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button { } label: {
                         Image(systemName: "arrow.turn.up.left")
-                            .font(.system(size:20))
+                            .font(.system(size:18))
                             .foregroundColor(.gray)
+                            .disabled(true)
                     }
                 }
                 
-                // Change page (next)
+                
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button { } label: {
                         Image(systemName: "arrow.turn.up.right")
-                            .font(.system(size:20))
+                            .font(.system(size:18))
                             .foregroundColor(.gray)
+                            .disabled(true)
                     }
                 }
             }
