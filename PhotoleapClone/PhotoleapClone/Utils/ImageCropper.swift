@@ -3,18 +3,6 @@ import SwiftUI
 import CoreGraphics
 
 class ImageCropper: ObservableObject {
-    
-//    func rectReader() -> some View {
-//        return GeometryReader { (geometry) -> Color in
-//            let imageSize = geometry.size
-//            DispatchQueue.main.async {
-//                //print(">> \(imageSize)") // use image actual size in your calculations
-//                self.imageSize = imageSize
-//            }
-//            return .clear
-//        }
-//    }
-    
     func cropImage(_ inputImage: UIImage, toRect cropRect: CGRect, viewWidth: CGFloat, viewHeight: CGFloat) -> UIImage?
     {
         let imageViewScale = max(inputImage.size.width / viewWidth,
@@ -37,19 +25,20 @@ class ImageCropper: ObservableObject {
         return croppedImage
     }
     
+    // Check if the rectangle used to crop is out of image bounds
     func checkIfOutOfBounds(recPos: CGPoint, imageSize: CGSize, screenSize: CGSize, recSize: CGSize ) -> Bool {
         let yTopBoundary = (screenSize.height - imageSize.height + 30) / 2 // + 30 because imageSize y is not 100 correct
         let yBotBoundary = ((screenSize.height) - imageSize.height) / 2 + imageSize.height - 15
         let xLeftBoundary = ((screenSize.width - imageSize.width) / 2) + 16
         let xRightBoundary = xLeftBoundary + imageSize.width - 32
         
-//        if(recPos.y - recSize.height < yTopBoundary || (recPos.y + (recSize.height / 2)) > yBotBoundary || (recPos.x - (recSize.width / 2)) < xLeftBoundary || (recPos.x + (recSize.width / 2)) > xRightBoundary){
         if recPos.y - (recSize.height / 2) < yTopBoundary || recPos.y + (recSize.height / 2) > yBotBoundary || recPos.x - (recSize.width / 2) < xLeftBoundary || recPos.x + (recSize.width / 2) > xRightBoundary {
             return true
         }
            return false
     }
     
+    // This force the crop rectangle to be inside the image bounds
     func recPosInsideTheImage(recPos: CGPoint, imageSize: CGSize, screenSize: CGSize, recSize: CGSize) -> CGPoint {
         let yTopBoundary = (screenSize.height - imageSize.height + 30) / 2
         let yBotBoundary = ((screenSize.height) - imageSize.height) / 2 + imageSize.height - 16
@@ -59,10 +48,6 @@ class ImageCropper: ObservableObject {
         // From the image center I will use a sort of offset to see where the rectangle needs to stop
         let imageCenterY = (screenSize.height / 2)
         let imageCenterX = (screenSize.width / 2)
-        
-//        if((recPos.y + 81 - (recHeight / 2)) < yTopBoundary || (recPos.y + 81 + (recHeight / 2)) > yBotBoundary || (recPos.x - (recWidth / 2)) < xLeftBoundary || (recPos.x + (recWidth / 2)) > xRightBoundary){
-//
-//        }
         
         // Top Right
         if recPos.x + (recSize.width / 2) > xRightBoundary &&  recPos.y - (recSize.height / 2) < yTopBoundary{

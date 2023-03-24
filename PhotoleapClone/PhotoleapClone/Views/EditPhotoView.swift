@@ -14,30 +14,20 @@ struct EditPhotoView: View {
     // Bool for alert showing
     @State private var showingAlert = false
     
-    // Var used to show the painting on top of the current image
+    // Show the painting on top of the current image
     @State private var paintedImage: UIImage = UIImage()
     
-    // Var used to show the text on top of the current image
+    // Show the text on top of the current image
     @State var textImage: UIImage = UIImage()
     
     // Final image that is going to be saved
     @State private var composedImage: UIImage = UIImage()
     
+    // Used to save the image
     @StateObject var imgSaver = ImageSaver()
     
+    // Toggle to browse images
     @State var showBrowseImages = false
-    
-    @State var imageSize: CGSize = .zero
-    
-    private func rectReader() -> some View {
-        return GeometryReader { (geometry) -> Color in
-            let imageSize = geometry.size
-            DispatchQueue.main.async {
-                self.imageSize = imageSize
-            }
-            return .clear
-        }
-    }
     
     // func to update the image based on the one picked in the gallery
     private func updateImg(){
@@ -55,7 +45,6 @@ struct EditPhotoView: View {
     
     
     var body: some View {
-        
         NavigationView {
             VStack{
                 
@@ -156,6 +145,7 @@ struct EditPhotoView: View {
             .navigationTitle("PhotoEditClone")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                // Gallery
                 ToolbarItem(placement: .navigationBarTrailing) {
                     PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
                         Image(systemName: "photo")
@@ -173,11 +163,12 @@ struct EditPhotoView: View {
                     }
                 }
                 
+                // Save photo
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingAlert.toggle()
                         
-                        let renderer = ImageRenderer(content: imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage, imageSize: imageSize))
+                        let renderer = ImageRenderer(content: imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage))
                         
                         composedImage = renderer.uiImage!
                         
@@ -200,6 +191,7 @@ struct EditPhotoView: View {
                     }
                 }
                 
+                // Change page (previous)
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button { } label: {
                         Image(systemName: "arrow.turn.up.left")
@@ -208,6 +200,7 @@ struct EditPhotoView: View {
                     }
                 }
                 
+                // Change page (next)
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button { } label: {
                         Image(systemName: "arrow.turn.up.right")
@@ -221,7 +214,8 @@ struct EditPhotoView: View {
 }
 
 
-private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage, textImage: UIImage, imageSize: CGSize) -> some View {
+// This view is basically the image and it's used to save it through ImageRenderer
+private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage, textImage: UIImage) -> some View {
     
     ZStack{
         if let image = imageEnt.imageUI {

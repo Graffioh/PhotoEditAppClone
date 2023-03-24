@@ -15,6 +15,7 @@ struct ImageEnhancerView: View {
                 VStack{
                     
                     HStack{
+                        // Reset enhancement when cancel is tapped
                         Button {
                             imageEnt.showEnhancer.toggle()
                             
@@ -65,6 +66,7 @@ struct ImageEnhancerView: View {
                     
                     Spacer()
                     
+                    // Enhance modifiers
                     HStack(spacing: 20){
                         Text("Brightness")
                             .foregroundColor(.white)

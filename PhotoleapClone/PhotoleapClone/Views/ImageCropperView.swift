@@ -82,7 +82,8 @@ struct ImageCropperView: View {
                                     .blur(radius: imageEnt.blurIntensity)
                                     .background(rectReader())
                                     .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
-                                //                                        .onTapGesture { // DEBUG
+                                // DEBUG
+                                //                                        .onTapGesture {
                                 //                                            print("x screen size: \(proxy.size.width) | y screen size: \(proxy.size.height) | x distance: \((proxy.size.width - imageSize.width) / 2)  | y distance: \((proxy.size.height - imageSize.height) / 2) | x image size: \(imageSize.width) | y image size: \(imageSize.height)")
                                 //                                }
                             }
@@ -118,7 +119,7 @@ struct ImageCropperView: View {
                                                      }
                                     )
                                 
-                                // Circle to resize the rectangle
+                                // Circle to resize the rectangle (to fix/change, not responsive)
                                 let circlePosition: CGPoint = CGPoint(x: centerRecLocation.x + (recSize.width / 2), y: centerRecLocation.y + (recSize.height / 2))
                                 
                                 Circle()
