@@ -236,11 +236,12 @@ private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage, textIm
         
         Image(uiImage: textImage)
             .resizable()
-            .scaledToFit()
+            .frame(width: imageEnt.imageUI!.size.width, height: imageEnt.imageUI!.size.height)
         
+        //MARK: If the image is low quality, the painting becomes low quality too
         Image(uiImage: paintImage)
             .resizable()
-            .scaledToFit()
+            .frame(width: imageEnt.imageUI!.size.width, height: imageEnt.imageUI!.size.height)
     }
     
 }

@@ -93,6 +93,8 @@ struct BrowseImagesView: View {
                 Button {
                     isSearched = true
                     
+                    pageNumberCount = 1
+                    
                     Task {
                         do {
                             self.fetchedImages = try await NetworkManager().fetchSearchedImages(pageNumber: String(pageNumberCount), searchString: searchText).photos
