@@ -20,11 +20,18 @@ struct ImagePainterView: View {
     
     @Binding var paintedImage: UIImage
     
+    // Used to read the "bounds" of the image
     private func rectReader2() -> some View {
         return GeometryReader { (geometry) -> Color in
-            let imageSize = geometry.size
-            DispatchQueue.main.async {
-                self.imageSize = imageSize
+            // OLD
+            //DispatchQueue.main.async {
+            //    self.imageSize = geometry.size
+            //}
+            
+            Task {
+                await MainActor.run {
+                    self.imageSize = geometry.size
+                }
             }
             return .clear
         }
@@ -34,7 +41,7 @@ struct ImagePainterView: View {
         GeometryReader{ proxy in
             ZStack{
                 Color(red:18 / 255, green:18 / 255, blue:18 / 255)
-            VStack{
+                VStack{
                     HStack{
                         Button {
                             imageEnt.showPainter.toggle()
@@ -65,7 +72,7 @@ struct ImagePainterView: View {
                             } label: {
                                 Text("Green 🟢")
                             }
-
+                            
                             Button {
                                 pickedColor = .blue
                             } label: {
@@ -94,7 +101,7 @@ struct ImagePainterView: View {
                             imageEnt.showPainter.toggle()
                             
                             let renderer = ImageRenderer(content: imageWithPaintingView(imageEnt: imageEnt, lines: lines, pickedColor: pickedColor, imageSize: imageSize))
-
+                            
                             paintedImage = renderer.uiImage!
                             
                             // Clear previous painting
@@ -105,59 +112,59 @@ struct ImagePainterView: View {
                         }.disabled(lines.isEmpty ? true : false)
                     }
                     .padding()
-                
-                Spacer()
-                
-                ZStack{
                     
-                    if let image = imageEnt.imageUI {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .padding()
-                            .background(rectReader2())
-                            .opacity(imageEnt.opacityAdjust)
-                            .brightness(imageEnt.brightnessAdjust)
-                            .contrast(imageEnt.contrastAdjust)
-                            .saturation(imageEnt.saturationAdjust)
-                            .blur(radius: imageEnt.blurIntensity)
-                            .position(x: proxy.size.width / 2, y: proxy.size.height / 2.2)
+                    Spacer()
                     
-                    Canvas { context, size in
-                        for line in lines{
-                            var path = Path()
-                            path.addLines(line.points)
-                            // Show the path on the Canvas
-                            context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
+                    ZStack{
+                        
+                        if let image = imageEnt.imageUI {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                                .padding()
+                                .background(rectReader2())
+                                .opacity(imageEnt.opacityAdjust)
+                                .brightness(imageEnt.brightnessAdjust)
+                                .contrast(imageEnt.contrastAdjust)
+                                .saturation(imageEnt.saturationAdjust)
+                                .blur(radius: imageEnt.blurIntensity)
+                                .position(x: proxy.size.width / 2, y: proxy.size.height / 2.2)
+                            
+                            Canvas { context, size in
+                                for line in lines{
+                                    var path = Path()
+                                    path.addLines(line.points)
+                                    // Show the path on the Canvas
+                                    context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
+                                }
+                            }
+                            .frame(width: imageSize.width, height: imageSize.height - 30)
+                            .gesture( DragGesture()
+                                .onChanged(){ value in
+                                    // Getting our gesture location (idk why but the offset is needed)
+                                    let newPoint = CGPoint(x: value.location.x, y: value.location.y)
+                                    // Creating the current line by appending the new points
+                                    currentLine.points.append(newPoint)
+                                    // Appending the line created in the lines array
+                                    self.lines.append(currentLine)
+                                }
+                                .onEnded(){ value in
+                                    // To make separate lines by clearing the points that the previous line was made of
+                                    self.currentLine = Line(points: [])
+                                }
+                            )
+                            
                         }
-                    }
-                    .frame(width: imageSize.width, height: imageSize.height - 30)
-                    .gesture( DragGesture()
-                        .onChanged(){ value in
-                            // Getting our gesture location (idk why but the offset is needed)
-                            let newPoint = CGPoint(x: value.location.x, y: value.location.y)
-                            // Creating the current line by appending the new points
-                            currentLine.points.append(newPoint)
-                            // Appending the line created in the lines array
-                            self.lines.append(currentLine)
-                        }
-                        .onEnded(){ value in
-                            // To make separate lines by clearing the points that the previous line was made of
-                            self.currentLine = Line(points: [])
-                        }
-                    )
-                    
-                }
-                    
-//                    DrawShape(lines: lines)
-//                        .stroke(lineWidth: currentLine.lineWidth)
-//                        .foregroundColor(currentLine.color)
+                        
+                        //                    DrawShape(lines: lines)
+                        //                        .stroke(lineWidth: currentLine.lineWidth)
+                        //                        .foregroundColor(currentLine.color)
                     }
                 }
             }
         }
     }
-
+    
 }
 
 // old drawing thing
@@ -179,15 +186,15 @@ struct ImagePainterView: View {
 
 private func imageWithPaintingView(imageEnt: ImageModel, lines: [Line], pickedColor: Color, imageSize: CGSize) -> some View {
     
-        Canvas { context, size in
-            for line in lines{
-                var path = Path()
-                path.addLines(line.points)
-                context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
-            }
+    Canvas { context, size in
+        for line in lines{
+            var path = Path()
+            path.addLines(line.points)
+            context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
         }
-        .frame(width: imageSize.width, height: imageSize.height - 30)
-        
+    }
+    .frame(width: imageSize.width, height: imageSize.height - 30)
+    
 }
 
 
@@ -196,18 +203,18 @@ extension UIImageView {
         guard let image = image else { return bounds }
         guard contentMode == .scaleAspectFit else { return bounds }
         guard image.size.width > 0 && image.size.height > 0 else { return bounds }
-
+        
         let scale: CGFloat
         if image.size.width > image.size.height {
             scale = bounds.width / image.size.width
         } else {
             scale = bounds.height / image.size.height
         }
-
+        
         let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
         let x = (bounds.width - size.width) / 2.0
         let y = (bounds.height - size.height) / 2.0
-
+        
         return CGRect(x: x, y: y, width: size.width, height: size.height)
     }
 }

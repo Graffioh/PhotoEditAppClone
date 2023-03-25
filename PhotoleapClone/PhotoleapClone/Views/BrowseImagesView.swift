@@ -75,14 +75,14 @@ struct BrowseImagesView: View {
                         .font(.system(size:16))
                         .foregroundColor(.yellow)
                 }
+                
+            }.padding()
             
-        }.padding()
-        
-        Spacer()
-        
+            Spacer()
+            
             Text("Photos provided by Pexels")
             
-        Spacer()
+            Spacer()
             
             HStack {
                 TextField("Search", text: $searchText)
@@ -110,39 +110,39 @@ struct BrowseImagesView: View {
                 }
             }
             
-        List(self.fetchedImages, id: \.self) { img in
-            Button {
-                showBrowseImages.toggle()
-                
-                Task {
-                    imageEnt.imageUI = try await imageConverter.convertUrlIntoSingleImage(imgUrl: img.src.large)
-                }
-            } label: {
-                AsyncImage(url: URL(string: img.src.large)) { asyncimg in
-                    asyncimg
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    ProgressView().progressViewStyle(.circular)
+            List(self.fetchedImages, id: \.self) { img in
+                Button {
+                    showBrowseImages.toggle()
+                    
+                    Task {
+                        imageEnt.imageUI = try await imageConverter.convertUrlIntoSingleImage(imgUrl: img.src.large)
+                    }
+                } label: {
+                    AsyncImage(url: URL(string: img.src.large)) { asyncimg in
+                        asyncimg
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    } placeholder: {
+                        ProgressView().progressViewStyle(.circular)
+                    }
                 }
             }
-        }
-        
-    }.onAppear {
-//        URLCache.shared.memoryCapacity = 50_000_000
-//        URLCache.shared.diskCapacity = 1_000_000_000
-        
-        Task {
-            do {
-                self.fetchedImages = try await NetworkManager().fetchCuratedImages(pageNumber: "1").photos
-                
-                //self.convertedImages = try await imageConverter.convertUrlIntoImages(browsedImages: fetchedImages)
-            } catch {
-                print(error)
+            
+        }.onAppear {
+            //URLCache.shared.memoryCapacity = 50_000_000
+            //URLCache.shared.diskCapacity = 1_000_000_000
+            
+            Task {
+                do {
+                    self.fetchedImages = try await NetworkManager().fetchCuratedImages(pageNumber: "1").photos
+                    
+                    //self.convertedImages = try await imageConverter.convertUrlIntoImages(browsedImages: fetchedImages)
+                } catch {
+                    print(error)
+                }
             }
         }
     }
-}
 }
 
 

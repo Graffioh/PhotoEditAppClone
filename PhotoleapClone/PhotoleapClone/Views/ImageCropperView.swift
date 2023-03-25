@@ -18,11 +18,18 @@ struct ImageCropperView: View {
     
     @StateObject var imgCropper = ImageCropper()
     
+    // Used to read the "bounds" of the image
     private func rectReader() -> some View {
         return GeometryReader { (geometry) -> Color in
-            let imageSize = geometry.size
-            DispatchQueue.main.async {
-                self.imageSize = imageSize
+            // OLD
+            //DispatchQueue.main.async {
+            //    self.imageSize = geometry.size
+            //}
+            
+            Task {
+                await MainActor.run {
+                    self.imageSize = geometry.size
+                }
             }
             return .clear
         }

@@ -11,9 +11,6 @@ struct EditPhotoView: View {
     // Image entity
     @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, showPainter: false, showInsertText: false, imageUI: UIImage(named: "image1")!)
     
-    // Bool for alert showing
-    @State private var showingAlert = false
-    
     // Show the painting on top of the current image
     @State private var paintedImage: UIImage = UIImage()
     
@@ -26,11 +23,10 @@ struct EditPhotoView: View {
     // Used to save the image
     @StateObject var imgSaver = ImageSaver()
     
-    // Toggle to browse images
+    // Various toggles
+    @State private var showingAlert = false
     @State var showBrowseImages = false
-    
     @State var showOptionsForPickingImages = false
-    
     @State var showPhotoPicker = false
     
     // func to update the image based on the one picked in the gallery
@@ -131,7 +127,7 @@ struct EditPhotoView: View {
                     }
                 }.padding(.bottom, 10)
             }
-            .navigationTitle("PhotoEditClone")
+            .navigationTitle("PhotoEditAppClone")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 // Gallery

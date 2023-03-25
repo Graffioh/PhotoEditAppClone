@@ -75,8 +75,8 @@
 		064F5BB72923D24700C9932F /* PhotoleapClone */ = {
 			isa = PBXGroup;
 			children = (
-				069BC45729CDB37B0097A498 /* Cache */,
 				064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */,
+				069BC45729CDB37B0097A498 /* Cache */,
 				06743C782923D367000C06D1 /* Models */,
 				067592A52924270100AAFBFE /* Utils */,
 				06743C772923D363000C06D1 /* Views */,

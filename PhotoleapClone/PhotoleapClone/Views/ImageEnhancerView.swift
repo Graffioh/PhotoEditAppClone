@@ -11,7 +11,7 @@ struct ImageEnhancerView: View {
         NavigationStack{
             ZStack{
                 Color(red:18 / 255, green:18 / 255, blue:18 / 255)
-                    //.edgesIgnoringSafeArea(.all)
+                //.edgesIgnoringSafeArea(.all)
                 VStack{
                     
                     HStack{
@@ -25,7 +25,7 @@ struct ImageEnhancerView: View {
                             imageEnt.brightnessAdjust = 0
                             imageEnt.saturationAdjust = 1
                         } label: {
-                           Text("Cancel")
+                            Text("Cancel")
                                 .foregroundColor(.white)
                         }
                         
@@ -50,7 +50,7 @@ struct ImageEnhancerView: View {
                     
                     .padding()
                     
-                     Spacer()
+                    Spacer()
                     
                     if let image = imageEnt.imageUI{
                         Image(uiImage: image)
@@ -71,7 +71,7 @@ struct ImageEnhancerView: View {
                         Text("Brightness")
                             .foregroundColor(.white)
                         
-                        Slider(value: $imageEnt.brightnessAdjust, in: 0...1){_ in
+                        Slider(value: $imageEnt.brightnessAdjust, in: 0...10){_ in
                             isImageModified = true
                         }.accentColor(.white)
                     }.padding(.horizontal, 30)
@@ -118,12 +118,9 @@ struct ImageEnhancerView: View {
     }
 }
 
-// To save enhanced image in ImageRenderer
+// To save enhanced image in ImageRenderer (problem with different resolutions)
 private func imageWithEnhancements(imageEnt: ImageModel) -> some View {
     Image(uiImage: imageEnt.imageUI!)
-        .resizable()
-        .scaledToFit()
-        .padding()
         .opacity(imageEnt.opacityAdjust)
         .brightness(imageEnt.brightnessAdjust)
         .contrast(imageEnt.contrastAdjust)
