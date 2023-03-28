@@ -6,6 +6,8 @@ struct ImageEnhancerView: View {
     
     @State var isImageModified: Bool = false
     
+    @State var imageViewGetter: ImageViewGetter = ImageViewGetter()
+    
     var body: some View {
         
         NavigationStack{
@@ -40,7 +42,7 @@ struct ImageEnhancerView: View {
                         Button {
                             imageEnt.showEnhancer.toggle()
                             
-                            let renderer = ImageRenderer(content: imageWithEnhancements(imageEnt: imageEnt))
+                            let renderer = ImageRenderer(content: imageViewGetter.imageWithEnhancementsView(imageEnt: imageEnt))
                             imageEnt.imageUI = renderer.uiImage
                         } label: {
                             Text("Done")
@@ -118,12 +120,4 @@ struct ImageEnhancerView: View {
     }
 }
 
-// To save enhanced image in ImageRenderer (problem with different resolutions)
-private func imageWithEnhancements(imageEnt: ImageModel) -> some View {
-    Image(uiImage: imageEnt.imageUI!)
-        .opacity(imageEnt.opacityAdjust)
-        .brightness(imageEnt.brightnessAdjust)
-        .contrast(imageEnt.contrastAdjust)
-        .saturation(imageEnt.saturationAdjust)
-        .blur(radius: imageEnt.blurIntensity)
-}
+

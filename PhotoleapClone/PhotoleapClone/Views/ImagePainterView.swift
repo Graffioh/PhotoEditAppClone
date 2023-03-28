@@ -20,6 +20,8 @@ struct ImagePainterView: View {
     
     @Binding var paintedImage: UIImage
     
+    @State var imageViewGetter: ImageViewGetter = ImageViewGetter()
+    
     // Used to read the "bounds" of the image
     @MainActor private func rectReader2() -> some View {
         return GeometryReader { (geometry) -> Color in
@@ -99,7 +101,7 @@ struct ImagePainterView: View {
                         Button {
                             imageEnt.showPainter.toggle()
                             
-                            let renderer = ImageRenderer(content: imageWithPaintingView(imageEnt: imageEnt, lines: lines, pickedColor: pickedColor, imageSize: imageSize))
+                            let renderer = ImageRenderer(content: imageViewGetter.imageWithPaintingView(imageEnt: imageEnt, lines: lines, pickedColor: pickedColor, imageSize: imageSize))
                             
                             paintedImage = renderer.uiImage!
                             
@@ -183,15 +185,15 @@ struct ImagePainterView: View {
 //    }
 //}
 
-private func imageWithPaintingView(imageEnt: ImageModel, lines: [Line], pickedColor: Color, imageSize: CGSize) -> some View {
-    
-    Canvas { context, size in
-        for line in lines{
-            var path = Path()
-            path.addLines(line.points)
-            context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
-        }
-    }
-    .frame(width: imageSize.width, height: imageSize.height - 30)
-    
-}
+//private func imageWithPaintingView(imageEnt: ImageModel, lines: [Line], pickedColor: Color, imageSize: CGSize) -> some View {
+//
+//    Canvas { context, size in
+//        for line in lines{
+//            var path = Path()
+//            path.addLines(line.points)
+//            context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
+//        }
+//    }
+//    .frame(width: imageSize.width, height: imageSize.height - 30)
+//
+//}

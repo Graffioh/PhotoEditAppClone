@@ -29,6 +29,8 @@ struct EditPhotoView: View {
     @State var showOptionsForPickingImages = false
     @State var showPhotoPicker = false
     
+    @State var imageViewGetter: ImageViewGetter = ImageViewGetter() // Maybe to change in a Singleton
+    
     // func to update the image based on the one picked in the gallery
     private func updateImg(){
         if let selectedImageData,
@@ -169,7 +171,7 @@ struct EditPhotoView: View {
                     Button {
                         showingAlert.toggle()
                         
-                        let renderer = ImageRenderer(content: imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage))
+                        let renderer = ImageRenderer(content: imageViewGetter.imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage))
                         
                         composedImage = renderer.uiImage!
                         
@@ -214,31 +216,5 @@ struct EditPhotoView: View {
             }
         }
     }
-}
-
-
-// This view is basically the image and it's used to save it through ImageRenderer
-private func imageComposedView(imageEnt: ImageModel, paintImage: UIImage, textImage: UIImage) -> some View {
-    
-    ZStack{
-        if let image = imageEnt.imageUI {
-            Image(uiImage: image)
-                .opacity(imageEnt.opacityAdjust)
-                .brightness(imageEnt.brightnessAdjust)
-                .contrast(imageEnt.contrastAdjust)
-                .saturation(imageEnt.saturationAdjust)
-                .blur(radius: imageEnt.blurIntensity)
-        }
-        
-        Image(uiImage: textImage)
-            .resizable()
-            .frame(width: imageEnt.imageUI!.size.width, height: imageEnt.imageUI!.size.height)
-        
-        //MARK: If the image is low quality, the painting becomes low quality too
-        Image(uiImage: paintImage)
-            .resizable()
-            .frame(width: imageEnt.imageUI!.size.width, height: imageEnt.imageUI!.size.height)
-    }
-    
 }
 

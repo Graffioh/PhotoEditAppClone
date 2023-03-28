@@ -13,6 +13,8 @@ struct InsertTextView: View {
     
     @Binding var textImage: UIImage
     
+    @State var imageViewGetter: ImageViewGetter = ImageViewGetter()
+    
     // Used to read the "bounds" of the image
    @MainActor private func rectReader3() -> some View {
         return GeometryReader { (geometry) -> Color in
@@ -55,7 +57,7 @@ struct InsertTextView: View {
                         Button {
                             imageEnt.showInsertText.toggle()
                             
-                            let renderer = ImageRenderer(content: textView(imageEnt: imageEnt, txt: txt, txtPos: txtPos, imageSize: imageSize))
+                            let renderer = ImageRenderer(content: imageViewGetter.imageWithTextView(imageEnt: imageEnt, txt: txt, txtPos: txtPos, imageSize: imageSize))
                             
                             textImage = renderer.uiImage!
                             
@@ -101,16 +103,5 @@ struct InsertTextView: View {
         }
         
     }
-    
-}
-
-private func textView(imageEnt: ImageModel, txt: String, txtPos: CGPoint, imageSize: CGSize) -> some View {
-    
-    Text("\(txt)")
-        .font(.system(size: 32))
-        //.position(x: txtPos.x, y: 100) // Problem with y pos
-        .foregroundColor(.green)
-        .bold()
-        .frame(width: imageSize.width, height: imageSize.height - 30)
     
 }
