@@ -14,7 +14,7 @@ struct InsertTextView: View {
     @Binding var textImage: UIImage
     
     // Used to read the "bounds" of the image
-    private func rectReader3() -> some View {
+   @MainActor private func rectReader3() -> some View {
         return GeometryReader { (geometry) -> Color in
             // OLD
             //DispatchQueue.main.async {
@@ -22,10 +22,9 @@ struct InsertTextView: View {
             //}
             
             Task {
-                await MainActor.run {
                     self.imageSize = geometry.size
-                }
             }
+            
             return .clear
         }
     }
@@ -87,9 +86,10 @@ struct InsertTextView: View {
                         }
                         
                         Text("\(txt)")
-                            .font(.system(size: 32))
+                            .font(.system(size: 40))
                             .position(txtPos)
-                            .foregroundColor(.red)
+                            .foregroundColor(.green)
+                            .bold()
                             .gesture(DragGesture()
                                 .onChanged{ state in
                                     txtPos = state.location
@@ -109,7 +109,8 @@ private func textView(imageEnt: ImageModel, txt: String, txtPos: CGPoint, imageS
     Text("\(txt)")
         .font(.system(size: 32))
         //.position(x: txtPos.x, y: 100) // Problem with y pos
-        .foregroundColor(.red)
+        .foregroundColor(.green)
+        .bold()
         .frame(width: imageSize.width, height: imageSize.height - 30)
     
 }

@@ -71,7 +71,7 @@ struct ImageEnhancerView: View {
                         Text("Brightness")
                             .foregroundColor(.white)
                         
-                        Slider(value: $imageEnt.brightnessAdjust, in: 0...10){_ in
+                        Slider(value: $imageEnt.brightnessAdjust, in: 0...1){_ in
                             isImageModified = true
                         }.accentColor(.white)
                     }.padding(.horizontal, 30)

@@ -21,7 +21,7 @@ struct ImagePainterView: View {
     @Binding var paintedImage: UIImage
     
     // Used to read the "bounds" of the image
-    private func rectReader2() -> some View {
+    @MainActor private func rectReader2() -> some View {
         return GeometryReader { (geometry) -> Color in
             // OLD
             //DispatchQueue.main.async {
@@ -29,10 +29,9 @@ struct ImagePainterView: View {
             //}
             
             Task {
-                await MainActor.run {
-                    self.imageSize = geometry.size
-                }
+                self.imageSize = geometry.size
             }
+
             return .clear
         }
     }
@@ -138,7 +137,7 @@ struct ImagePainterView: View {
                                     context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
                                 }
                             }
-                            .frame(width: imageSize.width, height: imageSize.height - 30)
+                            .frame(width: imageSize.width, height: imageSize.height)
                             .gesture( DragGesture()
                                 .onChanged(){ value in
                                     // Getting our gesture location (idk why but the offset is needed)

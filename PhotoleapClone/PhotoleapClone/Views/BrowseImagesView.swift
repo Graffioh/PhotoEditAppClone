@@ -6,6 +6,8 @@ struct BrowseImagesView: View {
     @Binding var showBrowseImages: Bool
     
     @State var fetchedImages: [BrowsedImageModel] = []
+    @State var fetchedImagesTry: [BrowsedImageModel] = []
+    
     @State var convertedImages: [UIImage] = []
     
     @StateObject var imageConverter: ImageConverter = ImageConverter()
@@ -43,8 +45,10 @@ struct BrowseImagesView: View {
                         do {
                             if !isSearched {
                                 self.fetchedImages = try await NetworkManager().fetchCuratedImages(pageNumber: String(pageNumberCount)).photos
+                                fetchedImages.append(contentsOf: try await NetworkManager().fetchCuratedImages(pageNumber: String(pageNumberCount + 1)).photos)
                             } else {
                                 self.fetchedImages = try await NetworkManager().fetchSearchedImages(pageNumber: String(pageNumberCount), searchString: searchText).photos
+                                fetchedImages.append(contentsOf: try await NetworkManager().fetchSearchedImages(pageNumber: String(pageNumberCount + 1), searchString: searchText).photos)
                             }
                         } catch {
                             print(error)
@@ -63,13 +67,37 @@ struct BrowseImagesView: View {
                         do {
                             if !isSearched {
                                 self.fetchedImages = try await NetworkManager().fetchCuratedImages(pageNumber: String(pageNumberCount)).photos
+                                //fetchedImages.append(contentsOf: try await NetworkManager().fetchCuratedImages(pageNumber: String(pageNumberCount + 1)).photos) // TRY FOR CACHING
                             } else {
                                 self.fetchedImages = try await NetworkManager().fetchSearchedImages(pageNumber: String(pageNumberCount), searchString: searchText).photos
+                                //fetchedImages.append(contentsOf: try await NetworkManager().fetchSearchedImages(pageNumber: String(pageNumberCount + 1), searchString: searchText).photos) // TRY FOR CACHING
                             }
                         } catch {
                             print(error)
                         }
                     }
+//                    Task {
+//                        do {
+//                            if !isSearched {
+//                                async let fetchedImagesC1 = try await NetworkManager().fetchCuratedImages(pageNumber: String(pageNumberCount)).photos
+//
+//                                    async let fetchedImagesC2 = try await NetworkManager().fetchCuratedImages(pageNumber: String(pageNumberCount + 1)).photos
+//
+//
+//
+//                                fetchedImages = await fetchedImagesC1
+//                                fetchedImages.append(contentsOf: await fetchedImagesC2).photos)
+//                            } else {
+//                                print("Yo")
+//
+//                            }
+//                        } catch {
+//                            print(error)
+//                        }
+//                    }
+                        
+                    
+                    
                 } label: {
                     Image(systemName: "arrow.right")
                         .font(.system(size:16))
@@ -135,6 +163,7 @@ struct BrowseImagesView: View {
             Task {
                 do {
                     self.fetchedImages = try await NetworkManager().fetchCuratedImages(pageNumber: "1").photos
+                    // fetchedImages.append(contentsOf: try await NetworkManager().fetchCuratedImages(pageNumber: String(pageNumberCount + 1)).photos) // TRY FOR CACHING
                     
                     //self.convertedImages = try await imageConverter.convertUrlIntoImages(browsedImages: fetchedImages)
                 } catch {
@@ -144,5 +173,4 @@ struct BrowseImagesView: View {
         }
     }
 }
-
 
