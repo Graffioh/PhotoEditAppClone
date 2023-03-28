@@ -1,9 +1,7 @@
 # PhotoEditAppClone
 iOS App clone made for educational purpose.
 
-**Done**
-
-Implemented functionalities:
+Implemented functionalities (without external packages):
 + Pick/Save an image from/in Gallery
 + Crop tool
 + Enhancer tool
