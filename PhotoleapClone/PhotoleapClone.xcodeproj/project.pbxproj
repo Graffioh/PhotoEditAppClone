@@ -19,6 +19,8 @@
 		067592AA2924E4AA00AAFBFE /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067592A92924E4AA00AAFBFE /* ImageModel.swift */; };
 		069BC45629CB9F3E0097A498 /* ImageConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069BC45529CB9F3E0097A498 /* ImageConverter.swift */; };
 		069BC45929CDB38A0097A498 /* CacheAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069BC45829CDB38A0097A498 /* CacheAsyncImage.swift */; };
+		069BC45E29D2E55B0097A498 /* UIImage+FixOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069BC45D29D2E55B0097A498 /* UIImage+FixOrientation.swift */; };
+		069BC46029D2E5AA0097A498 /* UIImageView+GetImgBounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069BC45F29D2E5AA0097A498 /* UIImageView+GetImgBounds.swift */; };
 		06C5FCFE292ABA1100ABA340 /* InsertTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C5FCFD292ABA1100ABA340 /* InsertTextView.swift */; };
 		06D05A3429CB04E800991DCF /* BrowseImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D05A3329CB04E800991DCF /* BrowseImagesView.swift */; };
 		06D05A3629CB09DA00991DCF /* BrowsedImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D05A3529CB09DA00991DCF /* BrowsedImageModel.swift */; };
@@ -39,6 +41,8 @@
 		067592A92924E4AA00AAFBFE /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		069BC45529CB9F3E0097A498 /* ImageConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConverter.swift; sourceTree = "<group>"; };
 		069BC45829CDB38A0097A498 /* CacheAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAsyncImage.swift; sourceTree = "<group>"; };
+		069BC45D29D2E55B0097A498 /* UIImage+FixOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+FixOrientation.swift"; sourceTree = "<group>"; };
+		069BC45F29D2E5AA0097A498 /* UIImageView+GetImgBounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+GetImgBounds.swift"; sourceTree = "<group>"; };
 		06C5FCFD292ABA1100ABA340 /* InsertTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsertTextView.swift; sourceTree = "<group>"; };
 		06D05A3329CB04E800991DCF /* BrowseImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseImagesView.swift; sourceTree = "<group>"; };
 		06D05A3529CB09DA00991DCF /* BrowsedImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsedImageModel.swift; sourceTree = "<group>"; };
@@ -80,6 +84,7 @@
 				06743C782923D367000C06D1 /* Models */,
 				067592A52924270100AAFBFE /* Utils */,
 				06743C772923D363000C06D1 /* Views */,
+				069BC45C29D2E5080097A498 /* Extensions */,
 				064F5BBC2923D24800C9932F /* Assets.xcassets */,
 				064F5BBE2923D24800C9932F /* Preview Content */,
 			);
@@ -133,6 +138,15 @@
 				069BC45829CDB38A0097A498 /* CacheAsyncImage.swift */,
 			);
 			path = Cache;
+			sourceTree = "<group>";
+		};
+		069BC45C29D2E5080097A498 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				069BC45D29D2E55B0097A498 /* UIImage+FixOrientation.swift */,
+				069BC45F29D2E5AA0097A498 /* UIImageView+GetImgBounds.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,10 +226,12 @@
 				06D05A3829CB0C5400991DCF /* NetworkManager.swift in Sources */,
 				06C5FCFE292ABA1100ABA340 /* InsertTextView.swift in Sources */,
 				064F5BBB2923D24800C9932F /* EditPhotoView.swift in Sources */,
+				069BC45E29D2E55B0097A498 /* UIImage+FixOrientation.swift in Sources */,
 				067592AA2924E4AA00AAFBFE /* ImageModel.swift in Sources */,
 				06295D1729294426007CEA95 /* ImagePainterView.swift in Sources */,
 				069BC45929CDB38A0097A498 /* CacheAsyncImage.swift in Sources */,
 				06D05A3429CB04E800991DCF /* BrowseImagesView.swift in Sources */,
+				069BC46029D2E5AA0097A498 /* UIImageView+GetImgBounds.swift in Sources */,
 				064F5BB92923D24800C9932F /* PhotoleapCloneApp.swift in Sources */,
 				0631632429256ADE00E92E11 /* ImageCropperView.swift in Sources */,
 				067592A42924244900AAFBFE /* ImageSaver.swift in Sources */,
