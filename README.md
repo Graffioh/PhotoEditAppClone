@@ -17,10 +17,6 @@ Implemented functionalities (without external packages):
 + Add text tool
   - Simple TextField
 
-(Old) Video: 
-
-https://user-images.githubusercontent.com/93008765/203634336-febe085f-cd9d-4090-a90d-a87b15dab759.MP4
-
 ## NEW VERSION!
 
 Bug fixes, QoL improvements and a new functionality:
