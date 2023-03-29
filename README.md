@@ -3,7 +3,7 @@ iOS App clone made for educational purpose.
 
 Implemented functionalities (without external packages):
 + Pick an image from the Gallery
-  - PhotoPicker from PhotosUI to save or retrieve images from the Gallery
+  - PhotoPicker PhotosUI to retrieve images from the Gallery
 + Save an image in the Gallery
   - ImageRenderer to save the composed image (Cropped/Painted/with Text)
   - Async rect reader with GeometryReader used to get image size based on specific device
