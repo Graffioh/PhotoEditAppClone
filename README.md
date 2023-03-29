@@ -3,7 +3,7 @@ iOS App clone made for educational purpose.
 
 Implemented functionalities (without external packages):
 + Pick an image from the Gallery
-  - PhotoPicker from PhotosUI to save or retrieve images from the Gallery
+  - PhotoPicker PhotosUI to retrieve images from the Gallery
 + Save an image in the Gallery
   - ImageRenderer to save the composed image (Cropped/Painted/with Text)
   - Async rect reader with GeometryReader used to get image size based on specific device
@@ -17,10 +17,6 @@ Implemented functionalities (without external packages):
 + Add text tool
   - Simple TextField
 
-(Old) Video: 
-
-https://user-images.githubusercontent.com/93008765/203634336-febe085f-cd9d-4090-a90d-a87b15dab759.MP4
-
 ## NEW VERSION!
 
 Bug fixes, QoL improvements and a new functionality:
@@ -29,6 +25,10 @@ Bug fixes, QoL improvements and a new functionality:
   - Search for images thanks to a custom query
 
 Video:
+
+https://user-images.githubusercontent.com/93008765/228460175-0eb7d886-2970-4cb1-954d-ff3e1c317da1.mp4
+
+
 
 
 
