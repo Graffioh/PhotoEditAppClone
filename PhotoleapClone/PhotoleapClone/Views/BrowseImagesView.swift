@@ -2,21 +2,16 @@ import SwiftUI
 
 struct BrowseImagesView: View {
     @ObservedObject var imageEnt: ImageModel
+    @StateObject var imageConverter: ImageConverter = ImageConverter()
     
     @Binding var showBrowseImages: Bool
     
-    @State var fetchedImages: [BrowsedImageModel] = []
-    @State var fetchedImagesTry: [BrowsedImageModel] = []
-    
-    @State var convertedImages: [UIImage] = []
-    
-    @StateObject var imageConverter: ImageConverter = ImageConverter()
-    
-    @State var pageNumberCount: Int = 1
-    
-    @State var searchText: String = ""
-    
-    @State var isSearched: Bool = false
+    @State private var fetchedImages: [BrowsedImageModel] = []
+    @State private var fetchedImagesTry: [BrowsedImageModel] = []
+    @State private var convertedImages: [UIImage] = []
+    @State private var pageNumberCount: Int = 1
+    @State private var searchText: String = ""
+    @State private var isSearched: Bool = false
     
     var body: some View {
         VStack {

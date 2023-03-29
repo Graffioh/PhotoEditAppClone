@@ -84,7 +84,7 @@
 				064F5BB82923D24800C9932F /* PhotoleapCloneApp.swift */,
 				069BC45729CDB37B0097A498 /* Cache */,
 				06743C782923D367000C06D1 /* Models */,
-				067592A52924270100AAFBFE /* Utils */,
+				067592A52924270100AAFBFE /* Services */,
 				06743C772923D363000C06D1 /* Views */,
 				069BC45C29D2E5080097A498 /* Extensions */,
 				064F5BBC2923D24800C9932F /* Assets.xcassets */,
@@ -123,7 +123,7 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		067592A52924270100AAFBFE /* Utils */ = {
+		067592A52924270100AAFBFE /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				067592A32924244900AAFBFE /* ImageSaver.swift */,
@@ -132,7 +132,7 @@
 				069BC45529CB9F3E0097A498 /* ImageConverter.swift */,
 				069BC46129D2FAA70097A498 /* ImageViewGetter.swift */,
 			);
-			path = Utils;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		069BC45729CDB37B0097A498 /* Cache */ = {

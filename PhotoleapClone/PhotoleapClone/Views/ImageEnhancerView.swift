@@ -4,9 +4,9 @@ import SwiftUI
 struct ImageEnhancerView: View {
     @ObservedObject var imageEnt: ImageModel
     
-    @State var isImageModified: Bool = false
+    @State private var isImageModified: Bool = false
     
-    @State var imageViewGetter: ImageViewGetter = ImageViewGetter()
+    @State private var imageViewGetter: ImageViewGetter = ImageViewGetter()
     
     var body: some View {
         

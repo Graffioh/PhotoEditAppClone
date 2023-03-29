@@ -9,18 +9,14 @@ struct Line {
 struct ImagePainterView: View {
     
     @ObservedObject var imageEnt: ImageModel
-    @State var imageSize: CGSize = .zero
-    
-    @State var currentLine = Line()
-    @State var lines: [Line] = []
-    
-    @State var pickedColor: Color = .red
-    
-    @State private var showingAlert = false
-    
     @Binding var paintedImage: UIImage
     
-    @State var imageViewGetter: ImageViewGetter = ImageViewGetter()
+    @State private var imageSize: CGSize = .zero
+    @State private var currentLine = Line()
+    @State private var lines: [Line] = []
+    @State private var pickedColor: Color = .red
+    @State private var showingAlert = false
+    @State private var imageViewGetter: ImageViewGetter = ImageViewGetter()
     
     // Used to read the "bounds" of the image
     @MainActor private func rectReader2() -> some View {

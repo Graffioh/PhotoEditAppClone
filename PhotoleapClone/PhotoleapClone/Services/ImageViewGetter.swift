@@ -36,7 +36,7 @@ class ImageViewGetter {
                 context.stroke(path, with: .color(pickedColor), lineWidth: line.lineWidth)
             }
         }
-        .frame(width: imageSize.width, height: imageSize.height - 30)
+        .frame(width: imageSize.width, height: imageSize.height)
         
     }
 

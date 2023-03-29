@@ -4,16 +4,14 @@ import SwiftUI
 struct InsertTextView: View {
     
     @ObservedObject var imageEnt: ImageModel
-    @State var imageSize: CGSize = .zero
-    
-    @State var txt: String = ""
-    @State var txtPos: CGPoint = CGPoint(x: 100, y: 200)
-    
-    @State private var showingAlert = false
     
     @Binding var textImage: UIImage
     
-    @State var imageViewGetter: ImageViewGetter = ImageViewGetter()
+    @State private var imageSize: CGSize = .zero
+    @State private var txt: String = ""
+    @State private var txtPos: CGPoint = CGPoint(x: 100, y: 200)
+    @State private var showingAlert = false
+    @State private var imageViewGetter: ImageViewGetter = ImageViewGetter()
     
     // Used to read the "bounds" of the image
    @MainActor private func rectReader3() -> some View {

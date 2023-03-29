@@ -4,22 +4,22 @@ import CoreGraphics
 
 struct ImageCropperView: View {
     @ObservedObject var imageEnt: ImageModel
-    
-    @State var imageSize: CGSize = .zero
-    
-    @State var originX: Double = 0
-    @State var originY: Double = 0
-    
-    @State var isDragging: Bool = false
-    @GestureState var locationState: CGPoint = CGPoint(x: 100, y: 100)
-    @State var centerRecLocation: CGPoint = CGPoint(x: 210, y: 420)
-    
-    @State var recSize: CGSize = CGSize(width: 100, height: 100)
-    
     @StateObject var imgCropper = ImageCropper()
     
+    @State private var imageSize: CGSize = .zero
+    
+    @State private var originX: Double = 0
+    @State private var originY: Double = 0
+    
+    @State private var isDragging: Bool = false
+    @GestureState private var locationState: CGPoint = CGPoint(x: 100, y: 100)
+    @State private var centerRecLocation: CGPoint = CGPoint(x: 210, y: 420)
+    
+    @State private var recSize: CGSize = CGSize(width: 100, height: 100)
+    
+    
     // Used to read the "bounds" of the image
-   @MainActor private func rectReader() -> some View {
+    @MainActor private func rectReader() -> some View {
         return GeometryReader { (geometry) -> Color in
             // OLD
             //DispatchQueue.main.async {

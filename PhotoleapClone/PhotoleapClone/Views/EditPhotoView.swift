@@ -3,47 +3,31 @@ import SwiftUI
 import PhotosUI
 
 struct EditPhotoView: View {
+    // Image entity
+    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, showPainter: false, showInsertText: false, imageUI: UIImage(named: "startingImage")!)
     
     // PhotoPicker vars
     @State private var selectedPhotoFromGallery: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
     
-    // Image entity
-    @ObservedObject var imageEnt = ImageModel(blurIntensity: 0, contrastAdjust: 1, opacityAdjust: 1, brightnessAdjust: 0, saturationAdjust: 1, showCropper: false, showEnhancer: false, showPainter: false, showInsertText: false, imageUI: UIImage(named: "startingImage")!)
-    
     // Show the painting on top of the current image
     @State private var paintedImage: UIImage = UIImage()
     
     // Show the text on top of the current image
-    @State var textImage: UIImage = UIImage()
+    @State private var textImage: UIImage = UIImage()
     
     // Final image that is going to be saved
     @State private var composedImage: UIImage = UIImage()
     
     // Used to save the image
-    @StateObject var imgSaver = ImageSaver()
+    @State private var imgSaver: ImageSaver = ImageSaver()
+    @State private var imgViewGetter: ImageViewGetter = ImageViewGetter()
     
     // Various toggles
     @State private var showingAlert = false
-    @State var showBrowseImages = false
-    @State var showOptionsForPickingImages = false
-    @State var showPhotoPicker = false
-    
-    @State var imageViewGetter: ImageViewGetter = ImageViewGetter() // Maybe to change in a Singleton
-    
-    // func to update the image based on the one picked in the gallery
-    private func updateImg(){
-        if let selectedImageData,
-           let uiImage = UIImage(data: selectedImageData) {
-            imageEnt.imageUI = uiImage.fixOrientation()
-            
-            imageEnt.blurIntensity = 0
-            imageEnt.contrastAdjust = 1
-            imageEnt.opacityAdjust = 1
-            imageEnt.brightnessAdjust = 0
-            imageEnt.saturationAdjust = 1
-        }
-    }
+    @State private var showBrowseImages = false
+    @State private var showOptionsForPickingImages = false
+    @State private var showPhotoPicker = false
     
     var body: some View {
         NavigationView {
@@ -161,7 +145,9 @@ struct EditPhotoView: View {
                                 selectedImageData = data
                             }
                             
-                            updateImg()
+                            if let selectedImageData, let uiImage = UIImage(data: selectedImageData) {
+                                imgSaver.updateImg(imageEnt: imageEnt, uiImage: uiImage)
+                            }
                         }
                     }
                 }
@@ -171,7 +157,7 @@ struct EditPhotoView: View {
                     Button {
                         showingAlert.toggle()
                         
-                        let renderer = ImageRenderer(content: imageViewGetter.imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage))
+                        let renderer = ImageRenderer(content: imgViewGetter.imageComposedView(imageEnt: imageEnt, paintImage: paintedImage, textImage: textImage))
                         
                         composedImage = renderer.uiImage!
                         
