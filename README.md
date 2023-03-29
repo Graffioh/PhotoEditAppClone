@@ -30,6 +30,10 @@ Bug fixes, QoL improvements and a new functionality:
 
 Video:
 
+https://user-images.githubusercontent.com/93008765/228460175-0eb7d886-2970-4cb1-954d-ff3e1c317da1.mp4
+
+
+
 
 
 
